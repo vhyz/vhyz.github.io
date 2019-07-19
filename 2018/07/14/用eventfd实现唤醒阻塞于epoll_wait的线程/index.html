@@ -46,7 +46,7 @@
     
     <title>
         
-            Links | vhyz&#39;s Blog | 
+            用eventfd实现唤醒阻塞于epoll_wait的线程 | 
         
         vhyz&#39;s Blog
     </title>
@@ -57,7 +57,7 @@
 
     <meta name="format-detection" content="telephone=no">
     <meta name="description" itemprop="description" content>
-    <meta name="keywords" content>
+    <meta name="keywords" content=",Linux,网络编程">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -84,6 +84,9 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?NKhlKQkXw/c66TR5p4wO+w==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
             
         
 
@@ -220,7 +223,7 @@
     <!-- WebAPP Icons -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="vhyz&#39;s Blog">
-    <meta name="msapplication-starturl" content="https://vhyz.me/link/">
+    <meta name="msapplication-starturl" content="https://vhyz.me/2018/07/14/用eventfd实现唤醒阻塞于epoll_wait的线程/">
     <meta name="msapplication-navbutton-color" content="#0097A7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="vhyz&#39;s Blog">
@@ -235,13 +238,16 @@
     
 
     <!-- The Open Graph protocol -->
-    <meta property="og:url" content="https://vhyz.me/link/">
+    <meta property="og:url" content="https://vhyz.me/2018/07/14/用eventfd实现唤醒阻塞于epoll_wait的线程/">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Links | vhyz&#39;s Blog | vhyz&#39;s Blog">
+    <meta property="og:title" content="用eventfd实现唤醒阻塞于epoll_wait的线程 | vhyz&#39;s Blog">
     <meta property="og:image" content="/img/favicon.png">
     <meta property="og:description" content>
-    
+    <meta property="og:article:tag" content="Linux"> <meta property="og:article:tag" content="网络编程"> 
 
+    
+        <meta property="article:published_time" content="Sat Jul 14 2018 19:42:47 GMT+0800">
+        <meta property="article:modified_time" content="Sat Jul 20 2019 00:37:27 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -249,13 +255,43 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://vhyz.me/link/index.html">
+        <link rel="canonical" href="https://vhyz.me/2018/07/14/用eventfd实现唤醒阻塞于epoll_wait的线程/index.html">
     
 
     <!-- Structured-data for SEO -->
     
         
 
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "https://vhyz.me/2018/07/14/用eventfd实现唤醒阻塞于epoll_wait的线程/index.html",
+    "headline": "用eventfd实现唤醒阻塞于epoll_wait的线程",
+    "datePublished": "Sat Jul 14 2018 19:42:47 GMT+0800",
+    "dateModified": "Sat Jul 20 2019 00:37:27 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "vhyz",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.png"
+        },
+        "description": "不忘初心，砥砺前行"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "vhyz&#39;s Blog",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.png"
+        }
+    },
+    "keywords": ",Linux,网络编程",
+    "description": "",
+}
+</script>
 
 
     
@@ -291,115 +327,236 @@
 
                     <!-- Post TOC -->
 
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#创建eventfd"><span class="post-toc-number">1.</span> <span class="post-toc-text">创建eventfd</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#唤醒函数wakeUp的实现"><span class="post-toc-number">2.</span> <span class="post-toc-text">唤醒函数wakeUp的实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#readHanle回调函数"><span class="post-toc-number">3.</span> <span class="post-toc-text">readHanle回调函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#将eventfd读事件加入到event-loop中"><span class="post-toc-number">4.</span> <span class="post-toc-text">将eventfd读事件加入到event loop中</span></a></li></ol>
+    </ul>
+    
+
+
+
 
 <!-- Layouts -->
 
-    <!-- Single Links Page -->
-    <style>
-    .md-links {
-        min-height: calc(100% - 120px - 5pc - 6em);
-        text-align: center;
-        overflow: auto;
-        padding: 0;
-        margin: 0 auto;
-        max-width: 320px;
-    }
+    <!-- Post Module -->
+    <div class="material-post_container">
 
-    @media screen and (min-width: 680px) {
-        .md-links {
-            max-width: 640px;
-        }
-    }
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
 
-    @media screen and (min-width: 1000px) {
-        .md-links {
-            max-width: 960px;
-        }
-    }
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
 
-    @media screen and (min-width: 1320px) {
-        .md-links {
-            max-width: 1280px;
-        }
-    }
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
 
-    @media screen and (min-width: 1640px) {
-        .md-links {
-            max-width: 1600px;
-        }
-    }
+        
+    
+            <p class="article-headline-p">
+                用eventfd实现唤醒阻塞于epoll_wait的线程
+            </p>
+        </div>
 
-    @media screen and (max-width: 480px) {
-        .md-links {
-            min-height: calc(100% - 200px - 5pc - 6em);
-            margin-top: 6em;
-        }
-    }
 
-    .md-links-item {
-        background: #fff;
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
-        height: 72px;
-        line-height: 15px;
-        margin: 20px 10px;
-        padding: 0px 0px;
-        transition: box-shadow 0.25s;
-    }
 
-    .md-links a {
-        color: #333;
-        text-decoration: none;
-    }
 
-    .md-links li {
-        width: 300px;
-        float: left;
-        list-style: none;
-    }
 
-    .md-links-item img {
-        float: left;
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 11px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
-    }
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
 
-    .md-links-item:hover {
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    }
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>vhyz</strong>
+        <span>7月 14, 2018</span>
+    </div>
 
-    .md-links-item a:hover{
-        cursor: pointer;
-    }
+    <div class="section-spacer"></div>
 
-    .md-links-title {
-        font-size: 20px;
-        line-height: 50px;
-    }
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
 
-    #scheme-Paradox .mdl-mini-footer{
-        clear: left;
-    }
-    #bottom{
-        position: relative;
-    }
-</style>
+    <!-- Qrcode -->
+    
 
-<ul class="md-links">
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/Linux/">Linux</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/网络编程/">网络编程</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=用eventfd实现唤醒阻塞于epoll_wait的线程&url=https://vhyz.me/2018/07/14/用eventfd实现唤醒阻塞于epoll_wait的线程/index.html&pic=https://vhyz.me/img/favicon.png&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=用eventfd实现唤醒阻塞于epoll_wait的线程&url=https://vhyz.me/2018/07/14/用eventfd实现唤醒阻塞于epoll_wait的线程/index.html&via=vhyz" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://vhyz.me/2018/07/14/用eventfd实现唤醒阻塞于epoll_wait的线程/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=https://vhyz.me/2018/07/14/用eventfd实现唤醒阻塞于epoll_wait的线程/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
     
 </ul>
 
-<script type="text/ls-javascript" id="page-links-script">
-    var adjustFooter = function() {
-        if( ($('#bottom').offset().top + $('#bottom').outerHeight() )<$(window).height() ) {
-            var footerBottom = $(window).height() - $('#bottom').outerHeight() - $('#bottom').offset().top;
-            $('#bottom').css('bottom', '-' + footerBottom + 'px');
-        }
-    };
-    $(document).ready(function() {
-        adjustFooter();
-    });
-</script>
+    
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>eventfd是Linux提供的一个进程/线程间通信的一种方式，它是一个文件描述符，所以可以使用read/write。</p>
+<p>在我们编写Reactor模式的服务器程序时，每个I/O线程都会有一个event loop，而这些线程会阻塞于epoll_wait(Linux系统)</p>
+<p>我们在给这些线程分发任务时，需要唤醒阻塞这些线程，而eventfd可以加入到epoll中，所以我们可以使用eventfd来实现唤醒线程</p>
+<h2 id="创建eventfd"><a href="#创建eventfd" class="headerlink" title="创建eventfd"></a>创建eventfd</h2><p>函数原型为：</p>
+<p>‘’’C<br>int eventfd(unsigned int initval, int flags);<br>‘’’</p>
+<p>initval: 计数器值，在这个程序中我们只用做唤醒，所以置为0</p>
+<p>flags: 标志位我们设置为EFD_CLOEXEC | EFD_NONBLOCK</p>
+<p>‘’’C++<br>int createEventFd() {<br>    int fd = eventfd(0, EFD_CLOEXEC | EFD_NONBLOCK);<br>    if (fd &lt; 0) {<br>        std::cout &lt;&lt; “eventfd error” &lt;&lt; std::endl;<br>        exit(1);<br>    }<br>    return fd;<br>}<br>‘’’</p>
+<h2 id="唤醒函数wakeUp的实现"><a href="#唤醒函数wakeUp的实现" class="headerlink" title="唤醒函数wakeUp的实现"></a>唤醒函数wakeUp的实现</h2><p>‘’’C++<br>void EventLoop::wakeUp() {<br>    uint64_t one = 1;<br>    write(wakeUpFd_, (char*)&amp;one, sizeof(one));<br>}<br>‘’’</p>
+<h2 id="readHanle回调函数"><a href="#readHanle回调函数" class="headerlink" title="readHanle回调函数"></a>readHanle回调函数</h2><p>当eventfd可读时，说明用户调用了wakeUp函数</p>
+<p>‘’’C++<br>void EventLoop::readWakeUpHandle() {<br>    std::cout &lt;&lt; “wakeUpRead” &lt;&lt; std::endl;<br>    uint64_t one = 1;<br>    read(wakeUpFd_, &amp;one, sizeof(one));<br>}<br>‘’’</p>
+<h2 id="将eventfd读事件加入到event-loop中"><a href="#将eventfd读事件加入到event-loop中" class="headerlink" title="将eventfd读事件加入到event loop中"></a>将eventfd读事件加入到event loop中</h2><p>‘’’C++<br>wakeChannel_.setFd(wakeUpFd_);<br>wakeChannel_.setEvents(EPOLLIN | EPOLLET);<br>wakeChannel_.setReadCallBack(std::bind(&amp;EventLoop::readWakeUpHandle, this));<br>addChannel(&amp;wakeChannel_);<br>‘’’</p>
+<p>将事件加入到loop中后，当线程阻塞于epoll_wait时，调用wakeUp即可实现线程的唤醒，这样线程就可以执行其他线程添加给该IO线程的任务</p>
+
+        
+    
+
+    
+</div>
 
 
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2018/07/28/造shared_ptr轮子的注意事项/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2018/06/12/用Python实现模拟登录正方教务系统抢课/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
 
 
 
@@ -584,6 +741,14 @@ It will not impact the appearance and can give developers a lot of support :)
                     
 
                     
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
 
                     <!--Footer-->
 <footer class="mdl-mini-footer" id="bottom">
@@ -733,6 +898,10 @@ It will not impact the appearance and can give developers a lot of support :)
 <!-- Import prettify js  -->
 
     
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
 
 
 
@@ -745,6 +914,11 @@ It will not impact the appearance and can give developers a lot of support :)
     });
 
     
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
         
     
     
