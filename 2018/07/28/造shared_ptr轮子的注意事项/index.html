@@ -512,39 +512,80 @@
 </li>
 </ul>
 <p>上面第一点说的是这个构造函数</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt; <span class="class"><span class="keyword">class</span> <span class="title">Y</span> &gt; </span></span><br><span class="line"><span class="class"><span class="title">shared_ptr</span>( <span class="title">const</span> <span class="title">shared_ptr</span>&lt;Y&gt;&amp; <span class="title">r</span>, <span class="title">element_type</span>* <span class="title">ptr</span> ) <span class="title">noexcept</span>;</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="C++">template&lt; class Y &gt; 
+shared_ptr( const shared_ptr&lt;Y&gt;&amp; r, element_type* ptr ) noexcept;</code></pre>
 <p>这个构造函数的测试代码如下（来源于 <a href="https://zh.cppreference.com/w/cpp/memory/shared_ptr/owner_before" target="_blank" rel="noopener">cppreference</a> )</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;memory&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> n1;</span><br><span class="line">    <span class="keyword">int</span> n2; </span><br><span class="line">    Foo(<span class="keyword">int</span> a, <span class="keyword">int</span> b) : n1(a), n2(b) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;   </span><br><span class="line">    <span class="keyword">auto</span> p1 = <span class="built_in">std</span>::make_shared&lt;Foo&gt;(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p2(p1, &amp;p1-&gt;n1);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p3(p1, &amp;p1-&gt;n2);</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="built_in">std</span>::boolalpha</span><br><span class="line">              &lt;&lt; <span class="string">"p2 &lt; p3 "</span> &lt;&lt; (p2 &lt; p3) &lt;&lt; <span class="string">'\n'</span></span><br><span class="line">              &lt;&lt; <span class="string">"p3 &lt; p2 "</span> &lt;&lt; (p3 &lt; p2) &lt;&lt; <span class="string">'\n'</span></span><br><span class="line">              &lt;&lt; <span class="string">"p2.owner_before(p3) "</span> &lt;&lt; p2.owner_before(p3) &lt;&lt; <span class="string">'\n'</span></span><br><span class="line">              &lt;&lt; <span class="string">"p3.owner_before(p2) "</span> &lt;&lt; p3.owner_before(p2) &lt;&lt; <span class="string">'\n'</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">std</span>::weak_ptr&lt;<span class="keyword">int</span>&gt; w2(p2);</span><br><span class="line">    <span class="built_in">std</span>::weak_ptr&lt;<span class="keyword">int</span>&gt; w3(p3);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> </span><br><span class="line"><span class="comment">//              &lt;&lt; "w2 &lt; w3 " &lt;&lt; (w2 &lt; w3) &lt;&lt; '\n'  // won't compile </span></span><br><span class="line"><span class="comment">//              &lt;&lt; "w3 &lt; w2 " &lt;&lt; (w3 &lt; w2) &lt;&lt; '\n'  // won't compile</span></span><br><span class="line">              &lt;&lt; <span class="string">"w2.owner_before(w3) "</span> &lt;&lt; w2.owner_before(w3) &lt;&lt; <span class="string">'\n'</span></span><br><span class="line">              &lt;&lt; <span class="string">"w3.owner_before(w2) "</span> &lt;&lt; w3.owner_before(w2) &lt;&lt; <span class="string">'\n'</span>;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="C++">#include &lt;iostream&gt;
+#include &lt;memory&gt;
 
+struct Foo {
+    int n1;
+    int n2; 
+    Foo(int a, int b) : n1(a), n2(b) {}
+};
+int main()
+{   
+    auto p1 = std::make_shared&lt;Foo&gt;(1, 2);
+    std::shared_ptr&lt;int&gt; p2(p1, &amp;p1-&gt;n1);
+    std::shared_ptr&lt;int&gt; p3(p1, &amp;p1-&gt;n2);
+
+    std::cout &lt;&lt; std::boolalpha
+              &lt;&lt; &quot;p2 &lt; p3 &quot; &lt;&lt; (p2 &lt; p3) &lt;&lt; &#39;\n&#39;
+              &lt;&lt; &quot;p3 &lt; p2 &quot; &lt;&lt; (p3 &lt; p2) &lt;&lt; &#39;\n&#39;
+              &lt;&lt; &quot;p2.owner_before(p3) &quot; &lt;&lt; p2.owner_before(p3) &lt;&lt; &#39;\n&#39;
+              &lt;&lt; &quot;p3.owner_before(p2) &quot; &lt;&lt; p3.owner_before(p2) &lt;&lt; &#39;\n&#39;;
+
+    std::weak_ptr&lt;int&gt; w2(p2);
+    std::weak_ptr&lt;int&gt; w3(p3);
+    std::cout 
+//              &lt;&lt; &quot;w2 &lt; w3 &quot; &lt;&lt; (w2 &lt; w3) &lt;&lt; &#39;\n&#39;  // won&#39;t compile 
+//              &lt;&lt; &quot;w3 &lt; w2 &quot; &lt;&lt; (w3 &lt; w2) &lt;&lt; &#39;\n&#39;  // won&#39;t compile
+              &lt;&lt; &quot;w2.owner_before(w3) &quot; &lt;&lt; w2.owner_before(w3) &lt;&lt; &#39;\n&#39;
+              &lt;&lt; &quot;w3.owner_before(w2) &quot; &lt;&lt; w3.owner_before(w2) &lt;&lt; &#39;\n&#39;;
+
+}</code></pre>
 <p>这说明了内部指针与管理的指针并不需要一致，再加上多态的要求，我们需要引用计数块的模板类型有指针类型也要有删除器类型，并且模板类型不同时父类与子类是无法相互转化的，所以我们必须首先声明一个抽象基类。</p>
 <p>抽象基类中有两个数据成员，这里值得一提的是shared_ptr与weak_ptr是有联系的，典型的实现为创建shared_ptr时将强计数与弱计数都置为1，然后shared_ptr执行析构函数时将强计数减一，如果减至0，则用删除器删除指针，然后将弱计数减一，如果此时弱计数为0，则销毁引用块，如果不为0，等到最后一个weak_ptr执行析构函数时再进行销毁引用块。</p>
 <p>上面说的实现是不用make_shared()函数进行产生智能指针的情况，因为如果用到了make_shared()函数产生智能指针的话是仅进行一次分配的，这里就不细谈了。</p>
 <p>然后我们关注下面的两个私有成员变量，两个私有成员变量均为原子类，这保证了多线程时引用计数的线程安全性。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ref_count_base</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">std</span>::atomic&lt;<span class="keyword">size_t</span>&gt;shared_cnt;</span><br><span class="line">	<span class="built_in">std</span>::atomic&lt;<span class="keyword">size_t</span>&gt;weak_cnt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="C++">class ref_count_base {
+private:
+    std::atomic&lt;size_t&gt;shared_cnt;
+    std::atomic&lt;size_t&gt;weak_cnt;
+}</code></pre>
 <p>然后其他的公有函数为操作内部计数的接口，这里就不讲了，但是有其他的虚函数需要讲一下。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span>* <span class="title">get_deleter</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line"><span class="comment">//用于得到删除器，以便非成员函数get_deleter()获取</span></span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">release</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line"><span class="comment">//释放资源，也就是进行销毁引用对象</span></span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">destory</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line"><span class="comment">//删除本身，也就是 delete this，为什么这么做呢？因为这样方便我们进行跟踪变化</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="C++">virtual void* get_deleter() = 0;
+//用于得到删除器，以便非成员函数get_deleter()获取
+virtual void release() = 0;
+//释放资源，也就是进行销毁引用对象
+virtual void destory() = 0;
+//删除本身，也就是 delete this，为什么这么做呢？因为这样方便我们进行跟踪变化</code></pre>
 <p>随后便是继承这个基类，进行内部的实现</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Deleter = default_delete&lt;T&gt;&gt;</span><br><span class="line">struct ref_count :<span class="keyword">public</span> ref_count_base;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="C++">template&lt;typename T, typename Deleter = default_delete&lt;T&gt;&gt;
+struct ref_count :public ref_count_base;</code></pre>
 <p>然后我们在shared_ptr类模板中新增 ref_count_base 指针便可以指向任意引用快，这样便可以实现多态了。</p>
 <h2 id="管理动态数组"><a href="#管理动态数组" class="headerlink" title="管理动态数组"></a>管理动态数组</h2><p>C++中有new[]可以创建动态数组，然而返回的指针只是一个指针，并不具有数组的形式，所以如果我们直接传入指针进行便不能直接进行管理，需要自己传入删除器才能进行资源管理，这样无疑增加了麻烦。</p>
 <p>实际上C++11标准规定的shared_ptr并不具备管理动态数组的功能，但是这个实现其实是不难的，我们有两个方案实现这个功能。</p>
 <p>第一个方案为先创建一个__shared_ptr的基类，然后shared_ptr继承这个基类，然后再用特化版本对数组版本进行特化，这样是比较麻烦的，又因为一大堆构造函数与赋值函需要重写进行转发，这样明显是比较麻烦的，所以我们采用第二种方案。</p>
 <p>说第二种方案前我们需要知道为什么不能直接使用数组版本进行管理，这是因为我们传入的模板类型T[]然后内部指针存储的其实为 T[]* 这样显然不是我们想要的。</p>
 <p>经过查询资料发现，我们可以用<type_traits>头文件中的std::remove_extent_t<t>进行数组类型拆除，具体实现如下</t></type_traits></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> element_type = <span class="built_in">std</span>::<span class="keyword">remove_extent_t</span>&lt;T&gt;;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="C++">using element_type = std::remove_extent_t&lt;T&gt;;</code></pre>
 <p>我们这样就可以得到T类型了，这样就可以直接使用数组类了，然后我们new引用计数块的时候需要这么做</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Y&gt;</span><br><span class="line"><span class="function"><span class="keyword">explicit</span> <span class="title">shared_ptr</span><span class="params">(Y* p)</span></span></span><br><span class="line">	: ptr(p), ref(new ref_block&lt;std::conditional_t&lt;std::is_array_v&lt;T&gt;,Y[],Y&gt;&gt;(p)) &#123;&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="C++">template&lt;typename Y&gt;
+explicit shared_ptr(Y* p)
+    : ptr(p), ref(new ref_block&lt;std::conditional_t&lt;std::is_array_v&lt;T&gt;,Y[],Y&gt;&gt;(p)) {}</code></pre>
 <p>才能使传入的Y*类型的指针创建适合自己版本的引用计数块</p>
 <h2 id="enable-shared-from-this"><a href="#enable-shared-from-this" class="headerlink" title="enable_shared_from_this"></a>enable_shared_from_this</h2><p>enable_shared_from_this类能使一个对象通过调用自己的成员函数获得管理的shared_ptr的副本，我们不能通过 shared_ptr&lt;T&gt;(this) 的方式获得shared_ptr，因为这样的话会导致析构两次，所以我们需要在第一次创建shared_ptr时就进行相关的操作。</p>
 <p>典型的实现为enable_shared_from_this类存储weak_ptr，然后某个类直接继承这个类，在shared_ptr的构造函数中将shared_ptr构造weak_ptr，这个思路很好理解，但是我们如何通过传入的类型来得知其是否继承了enable_shared_from_this类呢？</p>
 <p>答案便是继续利用&lt;type_traits&gt;的工具，这里用到了std::enable_if以及std::is_base_of</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Y, <span class="built_in">std</span>::<span class="keyword">enable_if_t</span>&lt;!<span class="built_in">std</span>::is_base_of_v&lt;enable_shared_from_this&lt;Y&gt;, Y&gt;, <span class="keyword">int</span>&gt; = <span class="number">0</span>&gt;</span><br><span class="line"><span class="keyword">void</span> _shared_from_this(Y* p) &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Y, <span class="built_in">std</span>::<span class="keyword">enable_if_t</span>&lt;<span class="built_in">std</span>::is_base_of_v&lt;enable_shared_from_this&lt;Y&gt;,Y&gt;,<span class="keyword">int</span>&gt; = <span class="number">0</span>&gt;</span><br><span class="line">	<span class="keyword">void</span> _shared_from_this(Y* p) &#123;</span><br><span class="line">		p-&gt;_internal_accept_owner(*<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="C++">    template&lt;typename Y, std::enable_if_t&lt;!std::is_base_of_v&lt;enable_shared_from_this&lt;Y&gt;, Y&gt;, int&gt; = 0&gt;
+    void _shared_from_this(Y* p) {}
+
+    template&lt;typename Y, std::enable_if_t&lt;std::is_base_of_v&lt;enable_shared_from_this&lt;Y&gt;,Y&gt;,int&gt; = 0&gt;
+        void _shared_from_this(Y* p) {
+            p-&gt;_internal_accept_owner(*this);
+    }</code></pre>
+
         
     
 

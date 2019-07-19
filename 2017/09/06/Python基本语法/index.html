@@ -498,85 +498,225 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h2 id="基本容器类型"><a href="#基本容器类型" class="headerlink" title="基本容器类型"></a>基本容器类型</h2><h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;classmates = [<span class="string">'Tom'</span>,<span class="string">'Peter'</span>]</span><br><span class="line">&gt;&gt;&gt;classmates</span><br><span class="line">[<span class="string">'Tom'</span>,<span class="string">'Peter'</span>]</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">classmates.append(<span class="string">'AMS'</span>) <span class="comment">#想尾插入</span></span><br><span class="line">classmates.insert(<span class="number">1</span>,<span class="string">'a'</span>)<span class="comment">#向指定位置插入</span></span><br><span class="line">classmates.pop()<span class="comment">#删除末尾</span></span><br><span class="line">classmates.pop(<span class="number">1</span>)<span class="comment">#删除指定位置</span></span><br></pre></td></tr></table></figure>
-
+        <h2 id="基本容器类型"><a href="#基本容器类型" class="headerlink" title="基本容器类型"></a>基本容器类型</h2><h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><pre><code class="python">&gt;&gt;&gt;classmates = [&#39;Tom&#39;,&#39;Peter&#39;]
+&gt;&gt;&gt;classmates
+[&#39;Tom&#39;,&#39;Peter&#39;]</code></pre>
+<pre><code class="python">classmates.append(&#39;AMS&#39;) #想尾插入
+classmates.insert(1,&#39;a&#39;)#向指定位置插入
+classmates.pop()#删除末尾
+classmates.pop(1)#删除指定位置</code></pre>
 <h3 id="tuple"><a href="#tuple" class="headerlink" title="tuple"></a>tuple</h3><p>tuple使用时使用()，且不能改变元素</p>
 <h3 id="dic"><a href="#dic" class="headerlink" title="dic"></a>dic</h3><p>dic与map基本一致</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">d = &#123;<span class="string">'s":2,'</span>a<span class="string">':3&#125;</span></span><br><span class="line"><span class="string">d.pop('</span>s<span class="string">')#会删除'</span>s<span class="string">'以及对应的值</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">d = {&#39;s&quot;:2,&#39;a&#39;:3}
+d.pop(&#39;s&#39;)#会删除&#39;s&#39;以及对应的值</code></pre>
 <h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><p>声明并定义一个set必须提供一个list</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s=set([<span class="string">'a'</span>,<span class="string">'b'</span>])</span><br><span class="line">s.add(<span class="string">'c'</span>)</span><br><span class="line">s.remove(<span class="string">'c'</span>)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">s=set([&#39;a&#39;,&#39;b&#39;])
+s.add(&#39;c&#39;)
+s.remove(&#39;c&#39;)</code></pre>
 <h2 id="高级特性"><a href="#高级特性" class="headerlink" title="高级特性"></a>高级特性</h2><h3 id="列表生成式"><a href="#列表生成式" class="headerlink" title="列表生成式"></a>列表生成式</h3><p>列表生成式即List Comprehensions，是Python内置的非常简单却强大的可以用来创建list的生成式。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>[x * x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11</span>) <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>]</span><br><span class="line">[<span class="number">4</span>, <span class="number">16</span>, <span class="number">36</span>, <span class="number">64</span>, <span class="number">100</span>]</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">&gt;&gt;&gt; [x * x for x in range(1, 11) if x % 2 == 0]
+[4, 16, 36, 64, 100]</code></pre>
 <p>还可以两层调用</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>[m + n <span class="keyword">for</span> m <span class="keyword">in</span> <span class="string">'ABC'</span> <span class="keyword">for</span> n <span class="keyword">in</span> <span class="string">'XYZ'</span>]</span><br><span class="line">[<span class="string">'AX'</span>, <span class="string">'AY'</span>, <span class="string">'AZ'</span>, <span class="string">'BX'</span>, <span class="string">'BY'</span>, <span class="string">'BZ'</span>, <span class="string">'CX'</span>, <span class="string">'CY'</span>, <span class="string">'CZ'</span>]</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">&gt;&gt;&gt; [m + n for m in &#39;ABC&#39; for n in &#39;XYZ&#39;]
+[&#39;AX&#39;, &#39;AY&#39;, &#39;AZ&#39;, &#39;BX&#39;, &#39;BY&#39;, &#39;BZ&#39;, &#39;CX&#39;, &#39;CY&#39;, &#39;CZ&#39;]</code></pre>
 <h3 id="生成器generator"><a href="#生成器generator" class="headerlink" title="生成器generator"></a>生成器generator</h3><p>只要将一个列表生成式的[]换成()，就创建了一个生成器</p>
 <p>生成器不耗用太多内存，仅仅在要使用时生成元素</p>
 <p>杨辉三角：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(n)</span>:</span></span><br><span class="line">    L=[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">yield</span> L</span><br><span class="line">        L = [L[x]+L[x+<span class="number">1</span>]<span class="keyword">for</span> x <span class="keyword">in</span> range(len(L)<span class="number">-1</span>)]</span><br><span class="line">        L.insert(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">        L.append(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">if</span> len(L) &gt; n:</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">def add(n):
+    L=[1]
+    while True:
+        yield L
+        L = [L[x]+L[x+1]for x in range(len(L)-1)]
+        L.insert(0,1)
+        L.append(1)
+        if len(L) &gt; n:
+            break</code></pre>
 <p>斐波契利数列</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(max)</span>:</span></span><br><span class="line">    n, a, b = <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> n &lt; max:</span><br><span class="line">        <span class="keyword">yield</span> b</span><br><span class="line">        a, b = b, a + b</span><br><span class="line">        n = n + <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'done'</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">def fib(max):
+    n, a, b = 0, 0, 1
+    while n &lt; max:
+        yield b
+        a, b = b, a + b
+        n = n + 1
+    return &#39;done&#39;</code></pre>
 <p>使用生成器时用Iterator即可</p>
 <h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><p>将一个非Iterator对象转换为Iterator对象，它们表示惰性计算对象</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>isinstance(iter([]), Iterator)</span><br><span class="line"><span class="literal">True</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>isinstance(iter(<span class="string">'abc'</span>), Iterator)</span><br><span class="line"><span class="literal">True</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h2><h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(x)</span>:</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> x * x</span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r = map(f, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(r)</span><br><span class="line">[<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">25</span>, <span class="number">36</span>, <span class="number">49</span>, <span class="number">64</span>, <span class="number">81</span>]</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">&gt;&gt;&gt; isinstance(iter([]), Iterator)
+True
+&gt;&gt;&gt; isinstance(iter(&#39;abc&#39;), Iterator)
+True</code></pre>
+<h2 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h2><h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><pre><code class="python">&gt;&gt;&gt; def f(x):
+...     return x * x
+...
+&gt;&gt;&gt; r = map(f, [1, 2, 3, 4, 5, 6, 7, 8, 9])
+&gt;&gt;&gt; list(r)
+[1, 4, 9, 16, 25, 36, 49, 64, 81]</code></pre>
 <p>map的第一个参数为函数对象，第二个参数为使用对象</p>
-<h3 id="reduce累积计算"><a href="#reduce累积计算" class="headerlink" title="reduce累积计算"></a>reduce累积计算</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> functools <span class="keyword">import</span> reduce</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(x, y)</span>:</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> x + y</span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>reduce(add, [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>])</span><br><span class="line"><span class="number">25</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="map与reduce运用实例"><a href="#map与reduce运用实例" class="headerlink" title="map与reduce运用实例"></a>map与reduce运用实例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> reduce</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">str2int</span><span class="params">(s)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fn</span><span class="params">(x,y)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> x * <span class="number">10</span> + y</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">char2num</span><span class="params">(s)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">'0'</span>: <span class="number">0</span>, <span class="string">'1'</span>: <span class="number">1</span>, <span class="string">'2'</span>: <span class="number">2</span>, <span class="string">'3'</span>: <span class="number">3</span>, <span class="string">'4'</span>: <span class="number">4</span>, <span class="string">'5'</span>: <span class="number">5</span>, <span class="string">'6'</span>: <span class="number">6</span>, <span class="string">'7'</span>: <span class="number">7</span>, <span class="string">'8'</span>: <span class="number">8</span>, <span class="string">'9'</span>: <span class="number">9</span>&#125;[s]</span><br><span class="line">    <span class="keyword">return</span> reduce(fn, map(char2num, s))</span><br></pre></td></tr></table></figure>
-
-<h3 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">is_odd</span><span class="params">(n)</span>:</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> n%<span class="number">2</span>==<span class="number">1</span></span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(filter(is_odd,[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]))</span><br><span class="line">[<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>]</span><br></pre></td></tr></table></figure>
-
+<h3 id="reduce累积计算"><a href="#reduce累积计算" class="headerlink" title="reduce累积计算"></a>reduce累积计算</h3><pre><code class="python">&gt;&gt;&gt; from functools import reduce
+&gt;&gt;&gt; def add(x, y):
+...     return x + y
+...
+&gt;&gt;&gt; reduce(add, [1, 3, 5, 7, 9])
+25</code></pre>
+<h3 id="map与reduce运用实例"><a href="#map与reduce运用实例" class="headerlink" title="map与reduce运用实例"></a>map与reduce运用实例</h3><pre><code class="python">from functools import reduce
+def str2int(s):
+    def fn(x,y):
+        return x * 10 + y
+    def char2num(s):
+        return {&#39;0&#39;: 0, &#39;1&#39;: 1, &#39;2&#39;: 2, &#39;3&#39;: 3, &#39;4&#39;: 4, &#39;5&#39;: 5, &#39;6&#39;: 6, &#39;7&#39;: 7, &#39;8&#39;: 8, &#39;9&#39;: 9}[s]
+    return reduce(fn, map(char2num, s))</code></pre>
+<h3 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h3><pre><code class="python">&gt;&gt;&gt; def is_odd(n):
+...     return n%2==1
+...
+&gt;&gt;&gt; list(filter(is_odd,[1,2,3,4,5,6]))
+[1, 3, 5]</code></pre>
 <p>查找素数</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">odd_</span><span class="params">()</span>:</span></span><br><span class="line">    n = <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        n = n + <span class="number">2</span></span><br><span class="line">        <span class="keyword">yield</span> n</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lam_odd</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">lambda</span> x : x % n &gt;<span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">result</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">yield</span> <span class="number">2</span></span><br><span class="line">    it = odd_()</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        n = next(it)</span><br><span class="line">        <span class="keyword">yield</span> n </span><br><span class="line">        it = filter(lam_odd(n),it)</span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> result():</span><br><span class="line">    <span class="keyword">if</span> n &lt; <span class="number">50</span>:</span><br><span class="line">        print(n)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<pre><code class="python">def odd_():
+    n = 1
+    while True:
+        n = n + 2
+        yield n
+def lam_odd(n):
+    return lambda x : x % n &gt;0
+def result():
+    yield 2
+    it = odd_()
+    while True:
+        n = next(it)
+        yield n 
+        it = filter(lam_odd(n),it)
+for n in result():
+    if n &lt; 50:
+        print(n)
+    else:
+        break</code></pre>
+<h3 id="返回函数"><a href="#返回函数" class="headerlink" title="返回函数"></a>返回函数</h3><pre><code class="python">def count():
+    def f(j):
+        def g():
+            return j*j
+        return g 
+    fs = []
+    for i in range(1,4):
+        fs.append(f(i))
+    return fs
+f1,f2,f3 = count()
+n1,n2,n3 = f1(),f2(),f3()
+print(n1,n2,n3)</code></pre>
+<h2 id="面向对象高级特性"><a href="#面向对象高级特性" class="headerlink" title="面向对象高级特性"></a>面向对象高级特性</h2><h3 id="使用slots"><a href="#使用slots" class="headerlink" title="使用slots"></a>使用<strong>slots</strong></h3><pre><code class="python">class Student(object):
+    __slots__ = (&#39;name&#39;, &#39;age&#39;) ## 用tuple定义允许绑定的属性名称</code></pre>
+<h3 id="使用-property"><a href="#使用-property" class="headerlink" title="使用@property"></a>使用@property</h3><pre><code class="python">class Student(object):
 
-<h3 id="返回函数"><a href="#返回函数" class="headerlink" title="返回函数"></a>返回函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(j)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">g</span><span class="params">()</span>:</span></span><br><span class="line">            <span class="keyword">return</span> j*j</span><br><span class="line">        <span class="keyword">return</span> g </span><br><span class="line">    fs = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">4</span>):</span><br><span class="line">        fs.append(f(i))</span><br><span class="line">    <span class="keyword">return</span> fs</span><br><span class="line">f1,f2,f3 = count()</span><br><span class="line">n1,n2,n3 = f1(),f2(),f3()</span><br><span class="line">print(n1,n2,n3)</span><br></pre></td></tr></table></figure>
+    @property
+    def score(self):
+        return self._score
 
-<h2 id="面向对象高级特性"><a href="#面向对象高级特性" class="headerlink" title="面向对象高级特性"></a>面向对象高级特性</h2><h3 id="使用slots"><a href="#使用slots" class="headerlink" title="使用slots"></a>使用<strong>slots</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span><span class="params">(object)</span>:</span></span><br><span class="line">    __slots__ = (<span class="string">'name'</span>, <span class="string">'age'</span>) <span class="comment">## 用tuple定义允许绑定的属性名称</span></span><br></pre></td></tr></table></figure>
+    @score.setter
+    def score(self, value):
+        if not isinstance(value, int):
+            raise ValueError(&#39;score must be an integer!&#39;)
+        if value &lt; 0 or value &gt; 100:
+            raise ValueError(&#39;score must between 0 ~ 100!&#39;)
+        self._score = value
 
-<h3 id="使用-property"><a href="#使用-property" class="headerlink" title="使用@property"></a>使用@property</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">score</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._score</span><br><span class="line"></span><br><span class="line"><span class="meta">    @score.setter</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">score</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isinstance(value, int):</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">'score must be an integer!'</span>)</span><br><span class="line">        <span class="keyword">if</span> value &lt; <span class="number">0</span> <span class="keyword">or</span> value &gt; <span class="number">100</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">'score must between 0 ~ 100!'</span>)</span><br><span class="line">        self._score = value</span><br><span class="line"></span><br><span class="line">s = Student()</span><br><span class="line">s.score = <span class="number">60</span></span><br><span class="line">print(<span class="string">'s.score ='</span>, s.score)</span><br><span class="line"><span class="comment">## ValueError: score must between 0 ~ 100!</span></span><br><span class="line">s.score = <span class="number">9999</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="str与repr"><a href="#str与repr" class="headerlink" title="str与repr"></a><strong>str</strong>与repr</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Student object (name=%s)'</span> % self.name</span><br><span class="line">    __repr__ = __str__</span><br></pre></td></tr></table></figure>
-
+s = Student()
+s.score = 60
+print(&#39;s.score =&#39;, s.score)
+## ValueError: score must between 0 ~ 100!
+s.score = 9999</code></pre>
+<h3 id="str与repr"><a href="#str与repr" class="headerlink" title="str与repr"></a><strong>str</strong>与repr</h3><pre><code class="python">class Student(object):
+    def __init__(self, name):
+        self.name = name
+    def __str__(self):
+        return &#39;Student object (name=%s)&#39; % self.name
+    __repr__ = __str__</code></pre>
 <p>这样使用print()方法或在交互环境中使用时，可以得到自己想要的结果</p>
-<h3 id="iter"><a href="#iter" class="headerlink" title="iter"></a>iter</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="class"><span class="keyword">class</span> <span class="title">Fib</span><span class="params">(object)</span>:</span></span><br><span class="line"><span class="meta">... </span>    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line"><span class="meta">... </span>            self.a,self.b = <span class="number">0</span>,<span class="number">1</span></span><br><span class="line"><span class="meta">... </span>    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></span><br><span class="line"><span class="meta">... </span>            <span class="keyword">return</span> self</span><br><span class="line"><span class="meta">... </span>    <span class="function"><span class="keyword">def</span> <span class="title">__next__</span><span class="params">(self)</span>:</span></span><br><span class="line"><span class="meta">... </span>            temp = self.a</span><br><span class="line"><span class="meta">... </span>            self.a = self.a + self.b</span><br><span class="line"><span class="meta">... </span>            self.b = temp + self.b</span><br><span class="line"><span class="meta">... </span>            <span class="keyword">if</span> self.a&gt;<span class="number">50</span>:</span><br><span class="line"><span class="meta">... </span>                    <span class="keyword">raise</span> StopIteration()</span><br><span class="line"><span class="meta">... </span>            <span class="keyword">return</span> self.a</span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> i <span class="keyword">in</span> Fib():</span><br><span class="line"><span class="meta">... </span>    print(i)</span><br><span class="line">...</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">16</span></span><br><span class="line"><span class="number">32</span></span><br></pre></td></tr></table></figure>
+<h3 id="iter"><a href="#iter" class="headerlink" title="iter"></a>iter</h3><pre><code class="python">&gt;&gt;&gt; class Fib(object):
+...     def __init__(self):
+...             self.a,self.b = 0,1
+...     def __iter__(self):
+...             return self
+...     def __next__(self):
+...             temp = self.a
+...             self.a = self.a + self.b
+...             self.b = temp + self.b
+...             if self.a&gt;50:
+...                     raise StopIteration()
+...             return self.a
+...
+&gt;&gt;&gt; for i in Fib():
+...     print(i)
+...
+1
+2
+4
+8
+16
+32</code></pre>
+<h2 id="错误异常处理"><a href="#错误异常处理" class="headerlink" title="错误异常处理"></a>错误异常处理</h2><h3 id="处理异常"><a href="#处理异常" class="headerlink" title="处理异常"></a>处理异常</h3><pre><code class="python">class TEST(object):
+    def __init__(self,s):
+        self.s = s
+    def foo(s):
+        return 10 / int(s)
+    def bar(s):
+        return foo(s) * 2
 
-<h2 id="错误异常处理"><a href="#错误异常处理" class="headerlink" title="错误异常处理"></a>错误异常处理</h2><h3 id="处理异常"><a href="#处理异常" class="headerlink" title="处理异常"></a>处理异常</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TEST</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,s)</span>:</span></span><br><span class="line">        self.s = s</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(s)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">10</span> / int(s)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bar</span><span class="params">(s)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> foo(s) * <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            bar(self.s)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            print(<span class="string">'Error:'</span>, e)</span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            print(<span class="string">'finally...'</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(s)</span>:</span></span><br><span class="line">    n = int(s)</span><br><span class="line">    <span class="keyword">assert</span> n != <span class="number">0</span>, <span class="string">'n is zero!'</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">10</span> / n</span><br></pre></td></tr></table></figure>
-
+    def main(self):
+        try:
+            bar(self.s)
+        except Exception as e:
+            print(&#39;Error:&#39;, e)
+        finally:
+            print(&#39;finally...&#39;)</code></pre>
+<h3 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h3><pre><code class="python">def foo(s):
+    n = int(s)
+    assert n != 0, &#39;n is zero!&#39;
+    return 10 / n</code></pre>
 <p>启动Python解释器时可以用-0参数来关闭assert</p>
-<h2 id="IO编程"><a href="#IO编程" class="headerlink" title="IO编程"></a>IO编程</h2><h3 id="文件读写"><a href="#文件读写" class="headerlink" title="文件读写"></a>文件读写</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">'test.txt'</span>,<span class="string">'r'</span>) <span class="keyword">as</span> e :</span><br><span class="line">    print(e.read())</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> e.readlines():</span><br><span class="line">    print(lines.strip())<span class="comment">#进行行读写</span></span><br></pre></td></tr></table></figure>
-
+<h2 id="IO编程"><a href="#IO编程" class="headerlink" title="IO编程"></a>IO编程</h2><h3 id="文件读写"><a href="#文件读写" class="headerlink" title="文件读写"></a>文件读写</h3><pre><code class="python">with open(&#39;test.txt&#39;,&#39;r&#39;) as e :
+    print(e.read())</code></pre>
+<pre><code class="python">for i in e.readlines():
+    print(lines.strip())#进行行读写</code></pre>
 <p>如果要读取二进制文件如图片视频等，用rb方式打开即可</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'d.jpg'</span>,<span class="string">'rb'</span>)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">f = open(&#39;d.jpg&#39;,&#39;rb&#39;)</code></pre>
 <p>下面介绍写入方法</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">'test.txt'</span>,<span class="string">'w'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(<span class="string">'hello'</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="操作目录"><a href="#操作目录" class="headerlink" title="操作目录"></a>操作目录</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> os</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>os.path.abspath(<span class="string">''</span>)</span><br><span class="line"><span class="string">'E:\\test'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>os.path.join(<span class="string">'E:\\test'</span>,<span class="string">'new'</span>)</span><br><span class="line"><span class="string">'E:\\test\\new'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>os.mkdir(<span class="string">'E:\\test\\new'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>os.rmdir(<span class="string">'E:\\test\\new'</span>)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">with open(&#39;test.txt&#39;,&#39;w&#39;) as f:
+    f.write(&#39;hello&#39;)</code></pre>
+<h3 id="操作目录"><a href="#操作目录" class="headerlink" title="操作目录"></a>操作目录</h3><pre><code class="python">&gt;&gt;&gt; import os
+&gt;&gt;&gt; os.path.abspath(&#39;&#39;)
+&#39;E:\\test&#39;
+&gt;&gt;&gt; os.path.join(&#39;E:\\test&#39;,&#39;new&#39;)
+&#39;E:\\test\\new&#39;
+&gt;&gt;&gt; os.mkdir(&#39;E:\\test\\new&#39;)
+&gt;&gt;&gt; os.rmdir(&#39;E:\\test\\new&#39;)</code></pre>
 <p>重命名文件，删除文件</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>os.rename(<span class="string">'新建文本文档.txt'</span>,<span class="string">'呵呵.txt'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>os.remove(<span class="string">'呵呵.txt'</span>)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">&gt;&gt;&gt; os.rename(&#39;新建文本文档.txt&#39;,&#39;呵呵.txt&#39;)
+&gt;&gt;&gt; os.remove(&#39;呵呵.txt&#39;)</code></pre>
 <h3 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h3><p>如果想另数据在网络或磁盘上传播，可以使用序列化</p>
-<h4 id="pickle"><a href="#pickle" class="headerlink" title="pickle"></a>pickle</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> pickle</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d = dict(name = <span class="string">'Bob'</span>,age = <span class="number">20</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f = open(<span class="string">'py.txt'</span>,<span class="string">'wb'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>pickle.dump(d,f)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f.close()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f = open(<span class="string">'py.txt'</span>,<span class="string">'rb'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d = pickle.load(f)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f.close()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d</span><br><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'Bob'</span>, <span class="string">'age'</span>: <span class="number">20</span>&#125;</span><br></pre></td></tr></table></figure>
-
+<h4 id="pickle"><a href="#pickle" class="headerlink" title="pickle"></a>pickle</h4><pre><code class="python">&gt;&gt;&gt; import pickle
+&gt;&gt;&gt; d = dict(name = &#39;Bob&#39;,age = 20)
+&gt;&gt;&gt; f = open(&#39;py.txt&#39;,&#39;wb&#39;)
+&gt;&gt;&gt; pickle.dump(d,f)
+&gt;&gt;&gt; f.close()
+&gt;&gt;&gt; f = open(&#39;py.txt&#39;,&#39;rb&#39;)
+&gt;&gt;&gt; d = pickle.load(f)
+&gt;&gt;&gt; f.close()
+&gt;&gt;&gt; d
+{&#39;name&#39;: &#39;Bob&#39;, &#39;age&#39;: 20}</code></pre>
 <h4 id="json"><a href="#json" class="headerlink" title="json"></a>json</h4><p>后续补充</p>
 <h2 id="多进程与多线程"><a href="#多进程与多线程" class="headerlink" title="多进程与多线程"></a>多进程与多线程</h2><h3 id="多进程"><a href="#多进程" class="headerlink" title="多进程"></a>多进程</h3><p>multiprocessing模块提供了一个Process类</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_proc</span><span class="params">(name)</span>:</span></span><br><span class="line">    print(<span class="string">'Run child process %s(%s)'</span>%(name,os.getpid()))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    print(<span class="string">'Parent process %s.'</span>%os.getpid())</span><br><span class="line">    p = Process(target = run_proc,args=(<span class="string">'test'</span>,))</span><br><span class="line">    print(<span class="string">'Child process will start'</span>)</span><br><span class="line">    p.start()</span><br><span class="line">    p.join()</span><br><span class="line">    print(<span class="string">'end'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code class="python">from multiprocessing import Process
+import os
 
+def run_proc(name):
+    print(&#39;Run child process %s(%s)&#39;%(name,os.getpid()))
+
+if __name__ == &#39;__main__&#39;:
+    print(&#39;Parent process %s.&#39;%os.getpid())
+    p = Process(target = run_proc,args=(&#39;test&#39;,))
+    print(&#39;Child process will start&#39;)
+    p.start()
+    p.join()
+    print(&#39;end&#39;)</code></pre>
 <p>其他内容因为暂时用不到，以后进行补充，暂时不用</p>
 
         

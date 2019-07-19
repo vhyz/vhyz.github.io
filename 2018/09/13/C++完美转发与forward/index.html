@@ -500,8 +500,10 @@
     
         <p>初次遇到std::forward是在阅读std::make_shared源码时看到的，当时不少很能理解为什么这可以达到完美转发的目的。这里来总结一下。</p>
 <h2 id="引用折叠"><a href="#引用折叠" class="headerlink" title="引用折叠"></a>引用折叠</h2><p>std::forward的出现是因为C++11右值语义的出现，而有时候我们需要写下面的代码进行参数的转发。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">foo</span>(<span class="title">T</span>&amp;&amp; <span class="title">arg</span>) &#123;</span></span><br><span class="line">    <span class="built_in">std</span>::forward&lt;T&gt;(arg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="C++">template&lt;class T&gt;
+void foo(T&amp;&amp; arg) {
+    std::forward&lt;T&gt;(arg);
+}</code></pre>
 <p>上面的函数看上去只能接受右值引用的参数，其实不然，在有了模板类型后，这里的&amp;&amp;成为了万能引用（Universal Reference），也就是说，上述函数既可以接收左值，也可以接收右值，但是在接收左值的时候，进行了引用折叠。</p>
 <p>C++不允许reference to reference，所以会进行引用折叠，显然我们会出现下面四种情况。</p>
 <ul>
@@ -512,23 +514,28 @@
 </ul>
 <p>其实规则很简单，只要其中一个引用类型为左值，该类型则为左值。</p>
 <h2 id="std-forward源码"><a href="#std-forward源码" class="headerlink" title="std::forward源码"></a>std::forward源码</h2><p>一般的实现源码如下</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">T</span>&amp;&amp; <span class="title">forward</span>(<span class="title">typename</span> <span class="title">std</span>:</span>:remove_reference&lt;T&gt;::type&amp; param)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;T&amp;&amp;&gt;(param);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="C++">template&lt;class T&gt;
+T&amp;&amp; forward(typename std::remove_reference&lt;T&gt;::type&amp; param)
+{
+    return static_cast&lt;T&amp;&amp;&gt;(param);
+}</code></pre>
 <p>上面的代码具体意思就是如果我们传进来的T为左值类型，则返回的类型为左值，如果我们传进来的类型为右值类型，则返回的类型为右值。</p>
 <p>这其中依赖的是模板的类型推导，用下面的代码示例说明引用折叠与std::forward的关系</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int k = 1;</span><br><span class="line">foo(k);</span><br><span class="line">foo(2);</span><br></pre></td></tr></table></figure>
-
-<p>foo(k)由编译器实例化函数后调用了下面函数</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="keyword">int</span>&amp; &amp;&amp;)</span></span>;</span><br></pre></td></tr></table></figure>
-
+<pre><code>int k = 1;
+foo(k);
+foo(2);</code></pre><p>foo(k)由编译器实例化函数后调用了下面函数</p>
+<pre><code class="C++">void foo(int&amp; &amp;&amp;);</code></pre>
 <p>这表面T类型被推导为了int&amp;，所以std::forward函数的实例化也是int&amp;类型的，所以我们的std::forward函数便转发了左值。</p>
 <p>而我们调用foo(2)的时候，由编译器实例化调用了下面函数</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="keyword">int</span> &amp;&amp;)</span></span>;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="C++">void foo(int &amp;&amp;);</code></pre>
 <p>T类型被推导为了int，所以顺理成章std::forward函数的实例化为int类型的，所以返回了右值类型。</p>
 <h2 id="转发构造函数的参数"><a href="#转发构造函数的参数" class="headerlink" title="转发构造函数的参数"></a>转发构造函数的参数</h2><p>这样C++便完成了完美转发，而我们配合C++的可变长模板可以达成构造函数参数的转发，就再也不用写一大堆类型的转发函数了。</p>
 <p>比如std::construct方法就可以直接通过转发参数进行构造对象</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>, <span class="title">class</span>... <span class="title">Args</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">construct</span>(<span class="title">T</span>* <span class="title">p</span>, <span class="title">Args</span>&amp;&amp;... <span class="title">args</span>) &#123;</span></span><br><span class="line">    <span class="keyword">new</span> (p) T(<span class="built_in">std</span>::forward&lt;Args&gt;(args)...);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="C++">template&lt;class T, class... Args&gt;
+void construct(T* p, Args&amp;&amp;... args) {
+    new (p) T(std::forward&lt;Args&gt;(args)...);
+}</code></pre>
+
         
     
 

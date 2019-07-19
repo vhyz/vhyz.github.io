@@ -57,7 +57,7 @@
 
     <meta name="format-detection" content="telephone=no">
     <meta name="description" itemprop="description" content>
-    <meta name="keywords" content=",爬虫,Python,模拟登录">
+    <meta name="keywords" content=",Python,爬虫,模拟登录">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -243,7 +243,7 @@
     <meta property="og:title" content="用Python实现模拟登录正方教务系统抢课 | vhyz&#39;s Blog">
     <meta property="og:image" content="/img/favicon.png">
     <meta property="og:description" content>
-    <meta property="og:article:tag" content="爬虫"> <meta property="og:article:tag" content="Python"> <meta property="og:article:tag" content="模拟登录"> 
+    <meta property="og:article:tag" content="Python"> <meta property="og:article:tag" content="爬虫"> <meta property="og:article:tag" content="模拟登录"> 
 
     
         <meta property="article:published_time" content="Tue Jun 12 2018 14:42:47 GMT+0800">
@@ -288,7 +288,7 @@
             "url": "/img/favicon.png"
         }
     },
-    "keywords": ",爬虫,Python,模拟登录",
+    "keywords": ",Python,爬虫,模拟登录",
     "description": "",
 }
 </script>
@@ -513,16 +513,35 @@
 <p>服务器会返回一个Cookie值，然后在本地保存，这与下面的会不相同。</p>
 <h2 id="获取会话信息（不使用Cookie"><a href="#获取会话信息（不使用Cookie" class="headerlink" title="获取会话信息（不使用Cookie)"></a>获取会话信息（不使用Cookie)</h2><p>这里我们要使用requests库，并且要伪造header的UA信息</p>
 <p>经过测试发现，我们只访问学校的IP地址，会自动重定向至有会话信息的网址，所以我们先访问一下IP地址。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Spider:</span><br><span class="line"></span><br><span class="line">    def __init__(self, url):</span><br><span class="line">        self.__uid = &apos;&apos;</span><br><span class="line">        self.__real_base_url = &apos;&apos;</span><br><span class="line">        self.__base_url = url</span><br><span class="line">        self.__headers = &#123;</span><br><span class="line">            &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.62 Safari/537.36&apos;,</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    def __set_real_url(self):</span><br><span class="line">        request = requests.get(self.__base_url, headers=self.__headers)</span><br><span class="line">        real_url = request.url</span><br><span class="line">        self.__real_base_url = real_url[:len(real_url) - len(&apos;default2.aspx&apos;)]</span><br><span class="line">        return request</span><br></pre></td></tr></table></figure>
+<pre><code>class Spider:
 
-<p>上面获取的url即为带有会话信息的网址，保存的url格式为<a href="http://110.65.10.xxx/(bdq1aj45lpd42o55vqpfgpie)/" target="_blank" rel="noopener">http://110.65.10.xxx/(bdq1aj45lpd42o55vqpfgpie)/</a></p>
+    def __init__(self, url):
+        self.__uid = &#39;&#39;
+        self.__real_base_url = &#39;&#39;
+        self.__base_url = url
+        self.__headers = {
+            &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.62 Safari/537.36&#39;,
+        }
+
+    def __set_real_url(self):
+        request = requests.get(self.__base_url, headers=self.__headers)
+        real_url = request.url
+        self.__real_base_url = real_url[:len(real_url) - len(&#39;default2.aspx&#39;)]
+        return request
+</code></pre><p>上面获取的url即为带有会话信息的网址，保存的url格式为<a href="http://110.65.10.xxx/(bdq1aj45lpd42o55vqpfgpie)/" target="_blank" rel="noopener">http://110.65.10.xxx/(bdq1aj45lpd42o55vqpfgpie)/</a></p>
 <p>保存为这样的格式是因为我们要访问其他地址</p>
 <h2 id="获取会话信息（使用Cookie"><a href="#获取会话信息（使用Cookie" class="headerlink" title="获取会话信息（使用Cookie)"></a>获取会话信息（使用Cookie)</h2><p>如果你们学校是使用Cookie的，直接访问一次网页即可，和上面代码一致。</p>
 <h2 id="验证码的处理"><a href="#验证码的处理" class="headerlink" title="验证码的处理"></a>验证码的处理</h2><p>分析r返回的文本信息  </p>
 <p>发现验证码的标签的资源地址为 src=”CheckCode.aspx” ，我们可以直接requests然后下载验证码图片，下载图片的一种优雅的方式如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def __get_code(self):</span><br><span class="line">    request = requests.get(self.__real_base_url + &apos;CheckCode.aspx&apos;, headers=self.__headers)</span><br><span class="line">    with open(&apos;code.jpg&apos;, &apos;wb&apos;)as f:</span><br><span class="line">        f.write(request.content)</span><br><span class="line">    im = Image.open(&apos;code.jpg&apos;)</span><br><span class="line">    im.show()</span><br><span class="line">    print(&apos;Please input the code:&apos;)</span><br><span class="line">    code = input()</span><br><span class="line">    return code</span><br></pre></td></tr></table></figure>
-
-<p>上面的代码把图片保存为code.jpg，Python有一个Image模块，可以实现自动打开图片</p>
+<pre><code>    def __get_code(self):
+        request = requests.get(self.__real_base_url + &#39;CheckCode.aspx&#39;, headers=self.__headers)
+        with open(&#39;code.jpg&#39;, &#39;wb&#39;)as f:
+            f.write(request.content)
+        im = Image.open(&#39;code.jpg&#39;)
+        im.show()
+        print(&#39;Please input the code:&#39;)
+        code = input()
+        return code</code></pre><p>上面的代码把图片保存为code.jpg，Python有一个Image模块，可以实现自动打开图片</p>
 <p>这样验证码就展示出来了，我们人工输入或者转入打码平台皆可</p>
 <h2 id="登录数据的构造"><a href="#登录数据的构造" class="headerlink" title="登录数据的构造"></a>登录数据的构造</h2><p>这是上面抓的登录post的数据包，</p>
 <p><img src="https://vhyz-1256915715.cos.ap-guangzhou.myqcloud.com/%E7%94%A8Python%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95%E6%AD%A3%E6%96%B9%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%8A%A2%E8%AF%BE/3.png" alt></p>
@@ -535,49 +554,137 @@
 <p>查找一下，这是一个表单隐藏信息，我们可以用BeautifulSoup库解析可以得出该一项数据的值</p>
 <p><img src="https://vhyz-1256915715.cos.ap-guangzhou.myqcloud.com/%E7%94%A8Python%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95%E6%AD%A3%E6%96%B9%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%8A%A2%E8%AF%BE/5.png" alt></p>
 <p>这是完整的登录数据包，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">def __get_login_data(self, uid, password):</span><br><span class="line">    self.__uid = uid</span><br><span class="line">    request = self.__set_real_url()</span><br><span class="line">    soup = BeautifulSoup(request.text, &apos;lxml&apos;)</span><br><span class="line">    form_tag = soup.find(&apos;input&apos;)</span><br><span class="line">    __VIEWSTATE = form_tag[&apos;value&apos;]</span><br><span class="line">    code = self.__get_code()</span><br><span class="line">    data = &#123;</span><br><span class="line">        &apos;__VIEWSTATE&apos;: __VIEWSTATE,</span><br><span class="line">        &apos;txtUserName&apos;: self.__uid,</span><br><span class="line">        &apos;TextBox2&apos;: password,</span><br><span class="line">        &apos;txtSecretCode&apos;: code,</span><br><span class="line">        &apos;RadioButtonList1&apos;: &apos;学生&apos;.encode(&apos;gb2312&apos;),</span><br><span class="line">        &apos;Button1&apos;: &apos;&apos;,</span><br><span class="line">        &apos;lbLanguage&apos;: &apos;&apos;,</span><br><span class="line">        &apos;hidPdrs&apos;: &apos;&apos;,</span><br><span class="line">        &apos;hidsc&apos;: &apos;&apos;,</span><br><span class="line">    &#125;</span><br><span class="line">    return data</span><br></pre></td></tr></table></figure>
-
-<h2 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h2><p>如果登录完成了，如何判断是否登录成功呢？我们从登录成功返回的界面发现有姓名这一标签，而我们等一下也是需要学生姓名，所以我们用这个根据来判断是否登录成功。</p>
+<pre><code>    def __get_login_data(self, uid, password):
+        self.__uid = uid
+        request = self.__set_real_url()
+        soup = BeautifulSoup(request.text, &#39;lxml&#39;)
+        form_tag = soup.find(&#39;input&#39;)
+        __VIEWSTATE = form_tag[&#39;value&#39;]
+        code = self.__get_code()
+        data = {
+            &#39;__VIEWSTATE&#39;: __VIEWSTATE,
+            &#39;txtUserName&#39;: self.__uid,
+            &#39;TextBox2&#39;: password,
+            &#39;txtSecretCode&#39;: code,
+            &#39;RadioButtonList1&#39;: &#39;学生&#39;.encode(&#39;gb2312&#39;),
+            &#39;Button1&#39;: &#39;&#39;,
+            &#39;lbLanguage&#39;: &#39;&#39;,
+            &#39;hidPdrs&#39;: &#39;&#39;,
+            &#39;hidsc&#39;: &#39;&#39;,
+        }
+        return data</code></pre><h2 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h2><p>如果登录完成了，如何判断是否登录成功呢？我们从登录成功返回的界面发现有姓名这一标签，而我们等一下也是需要学生姓名，所以我们用这个根据来判断是否登录成功。</p>
 <p><img src="https://vhyz-1256915715.cos.ap-guangzhou.myqcloud.com/%E7%94%A8Python%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95%E6%AD%A3%E6%96%B9%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%8A%A2%E8%AF%BE/6.png" alt></p>
 <p>代码如下,进行了验证码用户名和密码的提示信息判别</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">def login(self,uid,password):</span><br><span class="line">    while True:</span><br><span class="line">        data = self.__get_login_data(uid, password)</span><br><span class="line">        request = requests.post(self.__real_base_url + &apos;default2.aspx&apos;, headers=self.__headers, data=data)</span><br><span class="line">        soup = BeautifulSoup(request.text, &apos;lxml&apos;)</span><br><span class="line">        try:</span><br><span class="line">            name_tag = soup.find(id=&apos;xhxm&apos;)</span><br><span class="line">            self.__name = name_tag.string[:len(name_tag.string) - 2]</span><br><span class="line">            print(&apos;欢迎&apos;+self.__name)</span><br><span class="line">        except:</span><br><span class="line">            print(&apos;Unknown Error,try to login again.&apos;)</span><br><span class="line">            time.sleep(0.5)</span><br><span class="line">            continue</span><br><span class="line">        finally:</span><br><span class="line">            return True</span><br></pre></td></tr></table></figure>
-
-<h2 id="获取选课信息"><a href="#获取选课信息" class="headerlink" title="获取选课信息"></a>获取选课信息</h2><p>接下来就是获取选课信息了，这里我们以校公选课为例子，点击进去，进行抓包，headers没有什么好注意的，我们只用关注get发送的包即可<br><img src="https://vhyz-1256915715.cos.ap-guangzhou.myqcloud.com/%E7%94%A8Python%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95%E6%AD%A3%E6%96%B9%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%8A%A2%E8%AF%BE/7.png" alt></p>
+<pre><code>    def login(self,uid,password):
+        while True:
+            data = self.__get_login_data(uid, password)
+            request = requests.post(self.__real_base_url + &#39;default2.aspx&#39;, headers=self.__headers, data=data)
+            soup = BeautifulSoup(request.text, &#39;lxml&#39;)
+            try:
+                name_tag = soup.find(id=&#39;xhxm&#39;)
+                self.__name = name_tag.string[:len(name_tag.string) - 2]
+                print(&#39;欢迎&#39;+self.__name)
+            except:
+                print(&#39;Unknown Error,try to login again.&#39;)
+                time.sleep(0.5)
+                continue
+            finally:
+                return True</code></pre><h2 id="获取选课信息"><a href="#获取选课信息" class="headerlink" title="获取选课信息"></a>获取选课信息</h2><p>接下来就是获取选课信息了，这里我们以校公选课为例子，点击进去，进行抓包，headers没有什么好注意的，我们只用关注get发送的包即可<br><img src="https://vhyz-1256915715.cos.ap-guangzhou.myqcloud.com/%E7%94%A8Python%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95%E6%AD%A3%E6%96%B9%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%8A%A2%E8%AF%BE/7.png" alt></p>
 <p><img src="https://vhyz-1256915715.cos.ap-guangzhou.myqcloud.com/%E7%94%A8Python%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95%E6%AD%A3%E6%96%B9%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%8A%A2%E8%AF%BE/8.png" alt></p>
 <p><img src="https://vhyz-1256915715.cos.ap-guangzhou.myqcloud.com/%E7%94%A8Python%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95%E6%AD%A3%E6%96%B9%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%8A%A2%E8%AF%BE/9.png" alt></p>
 <p>发现有学号与姓名与gnmkdm这一项，姓名我们需要编码为gb2312的形式才能进行传送</p>
 <p>这里我们注意headers需要新增Referer项也就是当前访问的网址，才能进行请求</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def __enter_lessons_first(self):</span><br><span class="line">    data = &#123;</span><br><span class="line">        &apos;xh&apos;: self.__uid,</span><br><span class="line">        &apos;xm&apos;: self.__name.encode(&apos;gb2312&apos;),</span><br><span class="line">        &apos;gnmkdm&apos;: &apos;N121103&apos;,</span><br><span class="line">    &#125;</span><br><span class="line">    self.__headers[&apos;Referer&apos;] = self.__real_base_url + &apos;xs_main.aspx?xh=&apos; + self.__uid</span><br><span class="line">    request = requests.get(self.__real_base_url + &apos;xf_xsqxxxk.aspx&apos;, params=data, headers=self.__headers)</span><br><span class="line">    self.__headers[&apos;Referer&apos;] = request.url</span><br><span class="line">    soup = BeautifulSoup(request.text, &apos;lxml&apos;)</span><br><span class="line">    self.__set__VIEWSTATE(soup)</span><br></pre></td></tr></table></figure>
-
-<p>注意到上面有一个设置VIEWSTATE值的函数，这里等下在选课构造数据包的时候会讲</p>
+<pre><code>    def __enter_lessons_first(self):
+        data = {
+            &#39;xh&#39;: self.__uid,
+            &#39;xm&#39;: self.__name.encode(&#39;gb2312&#39;),
+            &#39;gnmkdm&#39;: &#39;N121103&#39;,
+        }
+        self.__headers[&#39;Referer&#39;] = self.__real_base_url + &#39;xs_main.aspx?xh=&#39; + self.__uid
+        request = requests.get(self.__real_base_url + &#39;xf_xsqxxxk.aspx&#39;, params=data, headers=self.__headers)
+        self.__headers[&#39;Referer&#39;] = request.url
+        soup = BeautifulSoup(request.text, &#39;lxml&#39;)
+        self.__set__VIEWSTATE(soup)</code></pre><p>注意到上面有一个设置VIEWSTATE值的函数，这里等下在选课构造数据包的时候会讲</p>
 <h2 id="模拟选课"><a href="#模拟选课" class="headerlink" title="模拟选课"></a>模拟选课</h2><p>随便选一门课，然后提交，抓包，看一下有什么数据发送</p>
 <p><img src="https://vhyz-1256915715.cos.ap-guangzhou.myqcloud.com/%E7%94%A8Python%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95%E6%AD%A3%E6%96%B9%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%8A%A2%E8%AF%BE/10.png" alt></p>
 <p><img src="https://vhyz-1256915715.cos.ap-guangzhou.myqcloud.com/%E7%94%A8Python%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95%E6%AD%A3%E6%96%B9%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%8A%A2%E8%AF%BE/11.png" alt></p>
 <p>前三个值可以在原网页中input标签中找到，由于前两项为空，就不获取了，而第三项我们使用soup解析获取即可，由于这个操作是每请求一次就变化的，我们写成一个函数，每次请求完成就设置一次。</p>
 <p><img src="https://vhyz-1256915715.cos.ap-guangzhou.myqcloud.com/%E7%94%A8Python%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95%E6%AD%A3%E6%96%B9%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%8A%A2%E8%AF%BE/12.png" alt></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def __set__VIEWSTATE(self, soup):</span><br><span class="line">    __VIEWSTATE_tag = soup.find(&apos;input&apos;, attrs=&#123;&apos;name&apos;: &apos;__VIEWSTATE&apos;&#125;)</span><br><span class="line">    self.__base_data[&apos;__VIEWSTATE&apos;] = __VIEWSTATE_tag[&apos;value&apos;]</span><br></pre></td></tr></table></figure>
-
-<p>而其他数据，我们通过搜索响应网页就可以知道他们是干什么用的，这里我只说明我们要用的数据。</p>
+<pre><code>    def __set__VIEWSTATE(self, soup):
+        __VIEWSTATE_tag = soup.find(&#39;input&#39;, attrs={&#39;name&#39;: &#39;__VIEWSTATE&#39;})
+        self.__base_data[&#39;__VIEWSTATE&#39;] = __VIEWSTATE_tag[&#39;value&#39;]</code></pre><p>而其他数据，我们通过搜索响应网页就可以知道他们是干什么用的，这里我只说明我们要用的数据。</p>
 <p>TextBox1为搜索框数据，我们可以用这个来搜索课程，dpkcmcGrid:txtPageSize为一页显示多少数据，经过测试，服务器最多响应200条。</p>
 <p>值得注意的是ddl_xqbs这个校区数据信息，我所在的校区的数字代号为2，也许不同学校设置有所不同，需要自己设置一下，也可以从网页中获取</p>
 <p>下面是基础数据包，由于我们搜索课程与选择课程都要使用这个基础数据包，所以我们直接在<strong>init</strong>函数里面新增</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">self.__base_data = &#123;</span><br><span class="line">    &apos;__EVENTTARGET&apos;: &apos;&apos;,</span><br><span class="line">    &apos;__EVENTARGUMENT&apos;: &apos;&apos;,</span><br><span class="line">    &apos;__VIEWSTATE&apos;: &apos;&apos;,</span><br><span class="line">    &apos;ddl_kcxz&apos;: &apos;&apos;,</span><br><span class="line">    &apos;ddl_ywyl&apos;: &apos;&apos;,</span><br><span class="line">    &apos;ddl_kcgs&apos;: &apos;&apos;,</span><br><span class="line">    &apos;ddl_xqbs&apos;: &apos;2&apos;,</span><br><span class="line">    &apos;ddl_sksj&apos;: &apos;&apos;,</span><br><span class="line">    &apos;TextBox1&apos;: &apos;&apos;,</span><br><span class="line">    &apos;dpkcmcGrid:txtChoosePage&apos;: &apos;1&apos;,</span><br><span class="line">    &apos;dpkcmcGrid:txtPageSize&apos;: &apos;200&apos;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>然后我们关注一下这条数据，我们搜索一下，发现这是课程的提交选课的代码，所以我们也可以直接从网页中获取，而on表示选项被选上</p>
+<pre><code>        self.__base_data = {
+            &#39;__EVENTTARGET&#39;: &#39;&#39;,
+            &#39;__EVENTARGUMENT&#39;: &#39;&#39;,
+            &#39;__VIEWSTATE&#39;: &#39;&#39;,
+            &#39;ddl_kcxz&#39;: &#39;&#39;,
+            &#39;ddl_ywyl&#39;: &#39;&#39;,
+            &#39;ddl_kcgs&#39;: &#39;&#39;,
+            &#39;ddl_xqbs&#39;: &#39;2&#39;,
+            &#39;ddl_sksj&#39;: &#39;&#39;,
+            &#39;TextBox1&#39;: &#39;&#39;,
+            &#39;dpkcmcGrid:txtChoosePage&#39;: &#39;1&#39;,
+            &#39;dpkcmcGrid:txtPageSize&#39;: &#39;200&#39;,
+        }</code></pre><p>然后我们关注一下这条数据，我们搜索一下，发现这是课程的提交选课的代码，所以我们也可以直接从网页中获取，而on表示选项被选上</p>
 <p><img src="https://vhyz-1256915715.cos.ap-guangzhou.myqcloud.com/%E7%94%A8Python%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95%E6%AD%A3%E6%96%B9%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%8A%A2%E8%AF%BE/13.png" alt></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kcmcGrid:_ctl2:xk:&apos;on&apos;</span><br></pre></td></tr></table></figure>
+<pre><code>kcmcGrid:_ctl2:xk:&#39;on&#39;</code></pre><h2 id="搜索课程"><a href="#搜索课程" class="headerlink" title="搜索课程"></a>搜索课程</h2><p>课程有很多信息，比如名字，上课时间，地点，这些东西确定好了才知道选的是哪门课，所以我们先新建一个类来存储信息</p>
+<pre><code>    class Lesson:
+        def __init__(self, name, code, teacher_name, Time, number):
+            self.name = name
+            self.code = code
+            self.teacher_name = teacher_name
+            self.time = Time
+            self.number = number
 
-<h2 id="搜索课程"><a href="#搜索课程" class="headerlink" title="搜索课程"></a>搜索课程</h2><p>课程有很多信息，比如名字，上课时间，地点，这些东西确定好了才知道选的是哪门课，所以我们先新建一个类来存储信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Lesson:</span><br><span class="line">    def __init__(self, name, code, teacher_name, Time, number):</span><br><span class="line">        self.name = name</span><br><span class="line">        self.code = code</span><br><span class="line">        self.teacher_name = teacher_name</span><br><span class="line">        self.time = Time</span><br><span class="line">        self.number = number</span><br><span class="line"></span><br><span class="line">    def show(self):</span><br><span class="line">        print(&apos;name:&apos; + self.name + &apos;code:&apos; + self.code + &apos;teacher_name:&apos; + self.teacher_name + &apos;time:&apos; + self.time)</span><br></pre></td></tr></table></figure>
+        def show(self):
+            print(&#39;name:&#39; + self.name + &#39;code:&#39; + self.code + &#39;teacher_name:&#39; + self.teacher_name + &#39;time:&#39; + self.time)</code></pre><p>有了这个类，我们就可以进行搜索课程了，具体代码看下面代码，解析网页内容就不细讲了。</p>
+<pre><code>    def __search_lessons(self, lesson_name=&#39;&#39;):
+        self.__base_data[&#39;TextBox1&#39;] = lesson_name.encode(&#39;gb2312&#39;)
+        request = requests.post(self.__headers[&#39;Referer&#39;], data=self.__base_data, headers=self.__headers)
+        soup = BeautifulSoup(request.text, &#39;lxml&#39;)
+        self.__set__VIEWSTATE(soup)
+        return self.__get_lessons(soup)
 
-<p>有了这个类，我们就可以进行搜索课程了，具体代码看下面代码，解析网页内容就不细讲了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">def __search_lessons(self, lesson_name=&apos;&apos;):</span><br><span class="line">    self.__base_data[&apos;TextBox1&apos;] = lesson_name.encode(&apos;gb2312&apos;)</span><br><span class="line">    request = requests.post(self.__headers[&apos;Referer&apos;], data=self.__base_data, headers=self.__headers)</span><br><span class="line">    soup = BeautifulSoup(request.text, &apos;lxml&apos;)</span><br><span class="line">    self.__set__VIEWSTATE(soup)</span><br><span class="line">    return self.__get_lessons(soup)</span><br><span class="line"></span><br><span class="line">def __get_lessons(self, soup):</span><br><span class="line">    lesson_list = []</span><br><span class="line">    lessons_tag = soup.find(&apos;table&apos;, id=&apos;kcmcGrid&apos;)</span><br><span class="line">    lesson_tag_list = lessons_tag.find_all(&apos;tr&apos;)[1:]</span><br><span class="line">    for lesson_tag in lesson_tag_list:</span><br><span class="line">        td_list = lesson_tag.find_all(&apos;td&apos;)</span><br><span class="line">        code = td_list[0].input[&apos;name&apos;]</span><br><span class="line">        name = td_list[1].string</span><br><span class="line">        teacher_name = td_list[3].string</span><br><span class="line">        Time = td_list[4][&apos;title&apos;]</span><br><span class="line">        number = td_list[10].string</span><br><span class="line">        lesson = self.Lesson(name, code, teacher_name, Time, number)</span><br><span class="line">        lesson_list.append(lesson)</span><br><span class="line">    return lesson_list</span><br></pre></td></tr></table></figure>
-
-<h2 id="进行选课"><a href="#进行选课" class="headerlink" title="进行选课"></a>进行选课</h2><p>选课我们只要将lesson_list传入即可，这就是我们之前创建的Lesson类的实例的列表，’Button’的内容为’ 提交 ‘，这两边各有一个空格，完事后我们可以进行发送请求进行选课。</p>
+    def __get_lessons(self, soup):
+        lesson_list = []
+        lessons_tag = soup.find(&#39;table&#39;, id=&#39;kcmcGrid&#39;)
+        lesson_tag_list = lessons_tag.find_all(&#39;tr&#39;)[1:]
+        for lesson_tag in lesson_tag_list:
+            td_list = lesson_tag.find_all(&#39;td&#39;)
+            code = td_list[0].input[&#39;name&#39;]
+            name = td_list[1].string
+            teacher_name = td_list[3].string
+            Time = td_list[4][&#39;title&#39;]
+            number = td_list[10].string
+            lesson = self.Lesson(name, code, teacher_name, Time, number)
+            lesson_list.append(lesson)
+        return lesson_list</code></pre><h2 id="进行选课"><a href="#进行选课" class="headerlink" title="进行选课"></a>进行选课</h2><p>选课我们只要将lesson_list传入即可，这就是我们之前创建的Lesson类的实例的列表，’Button’的内容为’ 提交 ‘，这两边各有一个空格，完事后我们可以进行发送请求进行选课。</p>
 <p>这里我们用正则提取了错误信息，比如选课时间未到、上课时间冲突这些错误信息来提示用户，我们还解析了网页的已选课程，这里也不细讲了，都是基础的网页解析。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">def __select_lesson(self, lesson_list):</span><br><span class="line">    data = copy.deepcopy(self.__base_data)</span><br><span class="line">    data[&apos;Button1&apos;] = &apos;  提交  &apos;.encode(&apos;gb2312&apos;)</span><br><span class="line">    for lesson in lesson_list:</span><br><span class="line">        code = lesson.code</span><br><span class="line">        data[code] = &apos;on&apos;</span><br><span class="line">    request = requests.post(self.__headers[&apos;Referer&apos;], data=data, headers=self.__headers)</span><br><span class="line">    soup = BeautifulSoup(request.text, &apos;lxml&apos;)</span><br><span class="line">    self.__set__VIEWSTATE(soup)</span><br><span class="line">    error_tag = soup.html.head.script</span><br><span class="line">    if not error_tag is None:</span><br><span class="line">        error_tag_text = error_tag.string</span><br><span class="line">        r = &quot;alert\(&apos;(.+?)&apos;\);&quot;</span><br><span class="line">        for s in re.findall(r, error_tag_text):</span><br><span class="line">            print(s)</span><br><span class="line">    print(&apos;已选课程:&apos;)</span><br><span class="line">    selected_lessons_pre_tag = soup.find(&apos;legend&apos;, text=&apos;已选课程&apos;)</span><br><span class="line">    selected_lessons_tag = selected_lessons_pre_tag.next_sibling</span><br><span class="line">    tr_list = selected_lessons_tag.find_all(&apos;tr&apos;)[1:]</span><br><span class="line">    for tr in tr_list:</span><br><span class="line">        td = tr.find(&apos;td&apos;)</span><br><span class="line">        print(td.string)</span><br></pre></td></tr></table></figure>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这次我们完成了模拟正方教务系统选课的过程，由于这个教务系统技术比较陈旧，所以比较好弄，事实上抢课的时候用Fiddler即可完成操作，因为我们只需要提前登录然后记录网址即可。</p>
+<pre><code>    def __select_lesson(self, lesson_list):
+        data = copy.deepcopy(self.__base_data)
+        data[&#39;Button1&#39;] = &#39;  提交  &#39;.encode(&#39;gb2312&#39;)
+        for lesson in lesson_list:
+            code = lesson.code
+            data[code] = &#39;on&#39;
+        request = requests.post(self.__headers[&#39;Referer&#39;], data=data, headers=self.__headers)
+        soup = BeautifulSoup(request.text, &#39;lxml&#39;)
+        self.__set__VIEWSTATE(soup)
+        error_tag = soup.html.head.script
+        if not error_tag is None:
+            error_tag_text = error_tag.string
+            r = &quot;alert\(&#39;(.+?)&#39;\);&quot;
+            for s in re.findall(r, error_tag_text):
+                print(s)
+        print(&#39;已选课程:&#39;)
+        selected_lessons_pre_tag = soup.find(&#39;legend&#39;, text=&#39;已选课程&#39;)
+        selected_lessons_tag = selected_lessons_pre_tag.next_sibling
+        tr_list = selected_lessons_tag.find_all(&#39;tr&#39;)[1:]
+        for tr in tr_list:
+            td = tr.find(&#39;td&#39;)
+            print(td.string)</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这次我们完成了模拟正方教务系统选课的过程，由于这个教务系统技术比较陈旧，所以比较好弄，事实上抢课的时候用Fiddler即可完成操作，因为我们只需要提前登录然后记录网址即可。</p>
 <p>本文代码Github地址：<a href="https://github.com/vhyz/ZF_Spider" target="_blank" rel="noopener">https://github.com/vhyz/ZF_Spider</a></p>
 
         

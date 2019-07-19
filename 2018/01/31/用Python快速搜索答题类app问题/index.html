@@ -501,22 +501,40 @@
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近答题类app比较火爆，由于题目广并且时间短，自己打字搜索是不太可能的了，于是想自己做一个自动搜索的Python脚本</p>
 <p>该Python脚本的原理是用adb工具将手机截图传到电脑上进行文字识别，然后百度搜索该问题，打开浏览器时间还是比较慢的</p>
 <h2 id="文字识别库pytesseract"><a href="#文字识别库pytesseract" class="headerlink" title="文字识别库pytesseract"></a>文字识别库pytesseract</h2><h3 id="pytesseract库的安装"><a href="#pytesseract库的安装" class="headerlink" title="pytesseract库的安装"></a>pytesseract库的安装</h3><p>这个库的安装特别容易，在命令行中输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pytesseract</span><br></pre></td></tr></table></figure>
-
-<p>即可安装</p>
+<pre><code>pip install pytesseract</code></pre><p>即可安装</p>
 <h3 id="tesseract-ocr引擎"><a href="#tesseract-ocr引擎" class="headerlink" title="tesseract ocr引擎"></a>tesseract ocr引擎</h3><p>tesseract ocr引擎是一个开源的强大引擎，安装Windows然后通过相关变量设置即可使用</p>
 <h3 id="image-to-string函数"><a href="#image-to-string函数" class="headerlink" title="image_to_string函数"></a>image_to_string函数</h3><p>该函数为pytesseract库的方法，将图片文本转换为文字</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> pytesseract</span><br><span class="line">question_text = pytesseract.image_to_string(question_img, lang=<span class="string">'chi_sim'</span>).replace(<span class="string">' '</span>,<span class="string">''</span>)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">from PIL import Image
+import pytesseract
+question_text = pytesseract.image_to_string(question_img, lang=&#39;chi_sim&#39;).replace(&#39; &#39;,&#39;&#39;)</code></pre>
 <p>上述为基础用法，并且将空格替换掉</p>
 <h2 id="adb工具"><a href="#adb工具" class="headerlink" title="adb工具"></a>adb工具</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>adb全名Android Debug Bridge，通过该工具，可以在电脑端的命令行与安装手机进行交互，前提是手机开启USB调试</p>
 <p>adb有很多功能，它可以模拟屏幕触击，之前火热的跳一跳辅助正是利用该原理进行操作的</p>
 <h3 id="python代码中使用adb"><a href="#python代码中使用adb" class="headerlink" title="python代码中使用adb"></a>python代码中使用adb</h3><p>python代码中使用adb shell很简单</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pull_screenshot</span><span class="params">()</span>:</span></span><br><span class="line">    os.system(<span class="string">'adb shell screencap -p /sdcard/screenshot.png'</span>)</span><br><span class="line">    os.system(<span class="string">'adb pull /sdcard/screenshot.png'</span>)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">import os
+def pull_screenshot():
+    os.system(&#39;adb shell screencap -p /sdcard/screenshot.png&#39;)
+    os.system(&#39;adb pull /sdcard/screenshot.png&#39;)</code></pre>
 <p>这样操作便可以模拟命令行输入将手机端截图发送至脚本目录</p>
-<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> pytesseract</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> webbrowser</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pull_screenshot</span><span class="params">()</span>:</span></span><br><span class="line">    os.system(<span class="string">'adb shell screencap -p /sdcard/screenshot.png'</span>)</span><br><span class="line">    os.system(<span class="string">'adb pull /sdcard/screenshot.png'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    pull_screenshot()</span><br><span class="line">    img = Image.open(<span class="string">"./screenshot.png"</span>)</span><br><span class="line">    question_img = img.crop((<span class="number">65</span>,<span class="number">350</span>,<span class="number">1019</span>,<span class="number">621</span>))</span><br><span class="line">    question_text = pytesseract.image_to_string(question_img, lang=<span class="string">'chi_sim'</span>).replace(<span class="string">' '</span>,<span class="string">''</span>)</span><br><span class="line">    webbrowser.open(<span class="string">"https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=2&amp;tn=baiduhome_pg&amp;wd="</span>+question_text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><pre><code class="python">from PIL import Image
+import pytesseract
+import time
+import os
+import webbrowser
 
+def pull_screenshot():
+    os.system(&#39;adb shell screencap -p /sdcard/screenshot.png&#39;)
+    os.system(&#39;adb pull /sdcard/screenshot.png&#39;)
+
+def main():
+    pull_screenshot()
+    img = Image.open(&quot;./screenshot.png&quot;)
+    question_img = img.crop((65,350,1019,621))
+    question_text = pytesseract.image_to_string(question_img, lang=&#39;chi_sim&#39;).replace(&#39; &#39;,&#39;&#39;)
+    webbrowser.open(&quot;https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=2&amp;tn=baiduhome_pg&amp;wd=&quot;+question_text)
+
+if __name__ == &#39;__main__&#39;:
+    main()</code></pre>
 <p>使用之后发现耗时还是比较久的，在识别1-2s后才能打开浏览器进行搜索，然后我们再找答案的话就可能时间到了</p>
 <p>于是改进可以使用爬虫，选定搜索结果的相关网页进行关键词的搜索，进行答案的排查搜索</p>
 

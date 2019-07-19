@@ -511,8 +511,23 @@
 <p>isMatch(“ab”, “.<br>*”) → true<br>isMatch(“aab”, “c*<br>a*b”) → true</p>
 <p>这道题用DP可以解决，我们设一个字符串s长度为m,另一个字符串p长度为n</p>
 <p>则创建数组dp[m+1][n+1]，dp[i][j]表示s字符串[0,i)是否能匹配p字符串[0,j)，接下来就是三种情况</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isMatch</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> p)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = s.size(),n=p.size();</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;&gt;dp(m+<span class="number">1</span>,<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;(n+<span class="number">1</span>,<span class="literal">false</span>));</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>]=<span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span>;i&lt;=m;++i)</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>;j&lt;=n;++j)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(p[j<span class="number">-1</span>]==<span class="string">'*'</span>)</span><br><span class="line">                    dp[i][j]=dp[i][j<span class="number">-2</span>]||(i&gt;<span class="number">0</span>&amp;&amp;(s[i<span class="number">-1</span>]==p[j<span class="number">-2</span>]||p[j<span class="number">-2</span>]==<span class="string">'.'</span>)&amp;&amp;dp[i<span class="number">-1</span>][j]); <span class="comment">//1.*匹配数量为0     2.s[i-1]与p[j-2]匹配，若匹配，则 dp[i][j]=dp[i-1][j]</span></span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    dp[i][j]=i&gt;<span class="number">0</span>&amp;&amp;(s[i<span class="number">-1</span>]==p[j<span class="number">-1</span>]||p[j<span class="number">-1</span>]==<span class="string">'.'</span>)&amp;&amp;dp[i<span class="number">-1</span>][j<span class="number">-1</span>]; <span class="comment">//3.若不是'*'，则只有一种情况，即s[i-1]==p[j-1]||p[j-1]=='.'</span></span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[m][n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">class Solution {
+public:
+    bool isMatch(string s, string p) {
+        int m = s.size(),n=p.size();
+        vector&lt;vector&lt;bool&gt;&gt;dp(m+1,vector&lt;bool&gt;(n+1,false));
+        dp[0][0]=true;
+        for(int i =0;i&lt;=m;++i)
+            for(int j = 1;j&lt;=n;++j)
+            {
+                if(p[j-1]==&#39;*&#39;)
+                    dp[i][j]=dp[i][j-2]||(i&gt;0&amp;&amp;(s[i-1]==p[j-2]||p[j-2]==&#39;.&#39;)&amp;&amp;dp[i-1][j]); //1.*匹配数量为0     2.s[i-1]与p[j-2]匹配，若匹配，则 dp[i][j]=dp[i-1][j]
+                else
+                    dp[i][j]=i&gt;0&amp;&amp;(s[i-1]==p[j-1]||p[j-1]==&#39;.&#39;)&amp;&amp;dp[i-1][j-1]; //3.若不是&#39;*&#39;，则只有一种情况，即s[i-1]==p[j-1]||p[j-1]==&#39;.&#39;
+            }
+        return dp[m][n];
+    }
+};</code></pre>
 <h2 id="通识符匹配"><a href="#通识符匹配" class="headerlink" title="通识符匹配"></a>通识符匹配</h2><p>Implement wildcard pattern matching with support for ‘?’ and ‘*’.</p>
 <p>‘?’ Matches any single character.</p>
 <p>‘*’ Matches any sequence of characters (including the empty sequence).</p>
@@ -526,11 +541,52 @@
 <p>isMatch(“aa”, “<br>*”) → true<br>isMatch(“aa”, “a*<br>“) → true</p>
 <p>isMatch(“ab”, “?<br>*”) → true<br>isMatch(“aab”, “c*<br>a*b”) → false</p>
 <p>第一种方法是动态规划，动态方程很好写出</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isMatch</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> p)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = s.size(),n= p.size();</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;&gt;dp(m+<span class="number">1</span>,<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;(n+<span class="number">1</span>,<span class="literal">false</span>));</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;=m;++i)</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>;j&lt;=n;++j)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(p[j<span class="number">-1</span>]==<span class="string">'*'</span>)</span><br><span class="line">                    dp[i][j]=(i&gt;<span class="number">0</span>&amp;&amp;dp[i<span class="number">-1</span>][j])||dp[i][j<span class="number">-1</span>];</span><br><span class="line">                <span class="keyword">else</span> </span><br><span class="line">                    dp[i][j]=i&gt;<span class="number">0</span>&amp;&amp;(p[j<span class="number">-1</span>]==<span class="string">'?'</span>||p[j<span class="number">-1</span>]==s[i<span class="number">-1</span>])&amp;&amp;dp[i<span class="number">-1</span>][j<span class="number">-1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[m][n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">class Solution {
+public:
+    bool isMatch(string s, string p) {
+        int m = s.size(),n= p.size();
+        vector&lt;vector&lt;bool&gt;&gt;dp(m+1,vector&lt;bool&gt;(n+1,false));
+        dp[0][0]=1;
+        for(int i = 0;i&lt;=m;++i)
+            for(int j = 1;j&lt;=n;++j)
+            {
+                if(p[j-1]==&#39;*&#39;)
+                    dp[i][j]=(i&gt;0&amp;&amp;dp[i-1][j])||dp[i][j-1];
+                else 
+                    dp[i][j]=i&gt;0&amp;&amp;(p[j-1]==&#39;?&#39;||p[j-1]==s[i-1])&amp;&amp;dp[i-1][j-1];
+            }
+        return dp[m][n];
+    }
+};</code></pre>
 <p>第二种方法是贪心</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isMatch</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> p)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> star=<span class="number">-1</span>,i=<span class="number">0</span>,j=<span class="number">0</span>,ss=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;s.size())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(s[i]==p[j]||p[j]==<span class="string">'?'</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                i++;</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(p[j]==<span class="string">'*'</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                star=j++;</span><br><span class="line">                ss=i;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(star!=<span class="number">-1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                j=star+<span class="number">1</span>;</span><br><span class="line">                i=++ss;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(p[j]==<span class="string">'*'</span>)j++;</span><br><span class="line">        <span class="keyword">return</span> j==p.size();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">class Solution {
+public:
+    bool isMatch(string s, string p) {
+        int star=-1,i=0,j=0,ss=0;
+        while(i&lt;s.size())
+        {
+            if(s[i]==p[j]||p[j]==&#39;?&#39;)
+            {
+                i++;
+                j++;
+            }
+            else if(p[j]==&#39;*&#39;)
+            {
+                star=j++;
+                ss=i;
+            }
+            else if(star!=-1)
+            {
+                j=star+1;
+                i=++ss;
+            }
+            else
+                return false;
+        }
+        while(p[j]==&#39;*&#39;)j++;
+        return j==p.size();
+    }
+};</code></pre>
 <p>贪心方法比动态规划快上不少，因为贪心方法可以在遍历的过程中匹配不成功即终止算法</p>
 <p>而动态规划需要遍历完，如果数据比较强的话动态规划容易卡住</p>
 <h2 id="子序列的匹配"><a href="#子序列的匹配" class="headerlink" title="子序列的匹配"></a>子序列的匹配</h2><p>Given string S and a dictionary of words words, find the number of words[i] that is a subsequence of S.</p>
@@ -541,11 +597,62 @@
 <p>Output: 3</p>
 <p>Explanation: There are three words in words that are a subsequence of S: “a”, “acd”, “ace”.</p>
 <p>第一种方法很容易想出，即贪心的算法，但是被很长且重复的子字符串给卡住时间了，所以用map保存已匹配过的字符串</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numMatchingSubseq</span><span class="params">(<span class="built_in">string</span> S, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; words)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="built_in">string</span>,<span class="keyword">int</span>&gt;m;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;words.size();++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(m.find(words[i])!=m.end())</span><br><span class="line">            &#123;</span><br><span class="line">                res+=m[words[i]];</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">int</span> j,k;</span><br><span class="line">            <span class="keyword">for</span>(j =<span class="number">0</span>,k=<span class="number">0</span>;k&lt;S.size()&amp;&amp;j&lt;words[i].size();++k)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(words[i][j]==S[k])</span><br><span class="line">                    j++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(j==words[i].size())</span><br><span class="line">            &#123;</span><br><span class="line">                res++;</span><br><span class="line">                m[words[i]]=<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                m[words[i]]=<span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">class Solution {
+public:
+    int numMatchingSubseq(string S, vector&lt;string&gt;&amp; words) {
+        int res=0;
+        map&lt;string,int&gt;m;
+        for(int i = 0;i&lt;words.size();++i)
+        {
+            if(m.find(words[i])!=m.end())
+            {
+                res+=m[words[i]];
+                continue;
+            }
+            int j,k;
+            for(j =0,k=0;k&lt;S.size()&amp;&amp;j&lt;words[i].size();++k)
+            {
+                if(words[i][j]==S[k])
+                    j++;
+            }
+            if(j==words[i].size())
+            {
+                res++;
+                m[words[i]]=1;
+            }
+            else
+                m[words[i]]=0;
+        }
+        return res;
+    }
+};</code></pre>
 <p>第二种为前缀的想法，匹配了前缀，去掉第一位继续放入queue，随后继续匹配，若长度为1，则结果加1</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numMatchingSubseq</span><span class="params">(<span class="built_in">string</span> S, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; words)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">char</span>,<span class="built_in">queue</span>&lt;<span class="built_in">string</span>&gt;&gt;m;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;word:words)</span><br><span class="line">            m[word[<span class="number">0</span>]].push(word);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;c:S)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(m.count(c))</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">int</span> n = m[c].size();</span><br><span class="line">                <span class="keyword">while</span>(n--)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">string</span> word=m[c].front();</span><br><span class="line">                    m[c].pop();</span><br><span class="line">                    <span class="keyword">if</span>(word.size()==<span class="number">1</span>)</span><br><span class="line">                        res++;</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                        m[word[<span class="number">1</span>]].push(word.substr(<span class="number">1</span>));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">class Solution {
+public:
+    int numMatchingSubseq(string S, vector&lt;string&gt;&amp; words) {
+        int res=0;
+        map&lt;char,queue&lt;string&gt;&gt;m;
+        for(auto &amp;word:words)
+            m[word[0]].push(word);
+        for(auto &amp;c:S)
+        {
+            if(m.count(c))
+            {
+                int n = m[c].size();
+                while(n--)
+                {
+                    string word=m[c].front();
+                    m[c].pop();
+                    if(word.size()==1)
+                        res++;
+                    else
+                        m[word[1]].push(word.substr(1));
+                }
+            }
+        }
+        return res;
+    }
+};</code></pre>
 
         
     

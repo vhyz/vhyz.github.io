@@ -320,7 +320,9 @@
         
             初次遇到std::forward是在阅读std::make_shared源码时看到的，当时不少很能理解为什么这可以达到完美转发的目的。这里来总结一下。
 引用折叠std::forward的出现是因为C++11右值语义的出现，而有时候我们需要写下面的代码进行参数的转发。
-
+template&lt;class T&gt;
+void foo(T&amp;&amp; arg) {
+   ...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -509,7 +511,9 @@
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
             向算法传递函数向排序算法传递二元谓词定义isSHorter方法
-1
+bool isShorter(const int &amp;i,const int&amp; j)
+{
+    return ...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -570,7 +574,7 @@
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            变量与基本类型extern的使用声明而不定义
+            变量与基本类型extern的使用声明而不定义extern in...
         
         &nbsp;&nbsp;&nbsp;
         <span>

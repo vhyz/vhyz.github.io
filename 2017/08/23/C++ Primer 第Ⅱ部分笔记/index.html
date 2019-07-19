@@ -499,14 +499,16 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <h2 id="向算法传递函数"><a href="#向算法传递函数" class="headerlink" title="向算法传递函数"></a>向算法传递函数</h2><h3 id="向排序算法传递二元谓词"><a href="#向排序算法传递二元谓词" class="headerlink" title="向排序算法传递二元谓词"></a>向排序算法传递二元谓词</h3><p>定义isSHorter方法</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isShorter</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> &amp;i,<span class="keyword">const</span> <span class="keyword">int</span>&amp; j)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> i&lt;j;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vecotr&lt;<span class="keyword">int</span>&gt;nums = &#123;<span class="number">5</span>,<span class="number">4</span>,<span class="number">1</span>,<span class="number">2.3</span>);</span><br><span class="line">sort(nums.begin(),nums.end(),isShorter);</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">bool isShorter(const int &amp;i,const int&amp; j)
+{
+    return i&lt;j;
+}</code></pre>
+<pre><code class="cpp">vecotr&lt;int&gt;nums = {5,4,1,2.3);
+sort(nums.begin(),nums.end(),isShorter);</code></pre>
 <h3 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h3><p>有些算法只能传递一元谓词，不能传递多元谓词，这时候lambda表达式就有效了</p>
 <p>比如find_if函数接收一个一元谓词</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> num = <span class="number">3</span>;</span><br><span class="line">find_if(nums.begin(), nums.end(), [num](<span class="keyword">const</span> <span class="keyword">int</span>&amp; i) &#123;<span class="keyword">return</span> i &gt; num; &#125;);</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">int num = 3;
+find_if(nums.begin(), nums.end(), [num](const int&amp; i) {return i &gt; num; });</code></pre>
 <p>[]里面为捕获列表，lambda表达式与函数类似，只有捕获列表，全局变量，全局静态变量，参数可在花括号中使用</p>
 <h3 id="lambda表达式的捕获"><a href="#lambda表达式的捕获" class="headerlink" title="lambda表达式的捕获"></a>lambda表达式的捕获</h3><h4 id="1值捕获与引用捕获"><a href="#1值捕获与引用捕获" class="headerlink" title="1值捕获与引用捕获"></a>1值捕获与引用捕获</h4><p>这点与函数类似</p>
 <h4 id="隐式捕获"><a href="#隐式捕获" class="headerlink" title="隐式捕获"></a>隐式捕获</h4><p>值的隐式捕获： [=];</p>
@@ -518,22 +520,44 @@
 <p>只需在参数列表后加上</p>
 <p>-&gt;typename</p>
 <p>即可使用多return语句</p>
-<h2 id="shared-ptr类"><a href="#shared-ptr类" class="headerlink" title="shared_ptr类"></a>shared_ptr类</h2><h3 id="初始化语句"><a href="#初始化语句" class="headerlink" title="初始化语句"></a>初始化语句</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt;p1;</span><br><span class="line">p1=make_shared&lt;<span class="keyword">int</span>&gt;(<span class="number">42</span>);<span class="comment">//使用make_shared函数</span></span><br><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt;p2=make_shared&lt;<span class="keyword">int</span>&gt;();<span class="comment">//默认初始化</span></span><br><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt;p3(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">42</span>));<span class="comment">//使用new初始化</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="拷贝"><a href="#拷贝" class="headerlink" title="拷贝"></a>拷贝</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">shared_ptr</span> <span class="title">p4</span><span class="params">(p1)</span></span>;<span class="comment">//直接拷贝</span></span><br><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p5 = p1;<span class="comment">//间接拷贝</span></span><br></pre></td></tr></table></figure>
-
+<h2 id="shared-ptr类"><a href="#shared-ptr类" class="headerlink" title="shared_ptr类"></a>shared_ptr类</h2><h3 id="初始化语句"><a href="#初始化语句" class="headerlink" title="初始化语句"></a>初始化语句</h3><pre><code class="cpp">shared_ptr&lt;int&gt;p1;
+p1=make_shared&lt;int&gt;(42);//使用make_shared函数
+shared_ptr&lt;int&gt;p2=make_shared&lt;int&gt;();//默认初始化
+shared_ptr&lt;int&gt;p3(new int(42));//使用new初始化</code></pre>
+<h3 id="拷贝"><a href="#拷贝" class="headerlink" title="拷贝"></a>拷贝</h3><pre><code class="cpp">shared_ptr p4(p1);//直接拷贝
+shared_ptr&lt;int&gt; p5 = p1;//间接拷贝</code></pre>
 <p>拷贝之后，指向那个地址的引用数加1，若引用数为0，则该内存自动释放</p>
-<h3 id="自动释放内存"><a href="#自动释放内存" class="headerlink" title="自动释放内存"></a>自动释放内存</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">     <span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p1 = make_shared&lt;<span class="keyword">int</span>&gt;(<span class="number">42</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//代码块结束，该内存自动释放</span></span><br><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; f()</span><br><span class="line">&#123;</span><br><span class="line">     <span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p1 = make_shared&lt;<span class="keyword">int</span>&gt;(<span class="number">42</span>);</span><br><span class="line">     <span class="keyword">return</span> p1;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//代码块结束，内存不会释放，在引用数为1时才会自动释放</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="shared-ptr-的改变方法"><a href="#shared-ptr-的改变方法" class="headerlink" title="shared_ptr 的改变方法"></a>shared_ptr 的改变方法</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">shared_ptr</span>&lt;T&gt;p(q);<span class="comment">//若q为new管理的内存，则不必delete q;</span></span><br><span class="line"><span class="built_in">shared_ptr</span>&lt;T&gt;p(q,d);<span class="comment">//p接管了q指针所管理的内存，并且使用d方法进行删除p</span></span><br><span class="line">p.reset();<span class="comment">//将引用数减1，若引用数为0，则进行删除操作</span></span><br><span class="line">p.reset(q,d);<span class="comment">//将p指针指向q，删除操作利用d方法</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="unique-ptr智能指针"><a href="#unique-ptr智能指针" class="headerlink" title="unique_ptr智能指针"></a>unique_ptr智能指针</h2><h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unique_ptr</span>&lt;T,D&gt;u(q,d);<span class="comment">//与上面的d方法删除类似</span></span><br><span class="line"><span class="comment">//举例，假设有方法D(),class q则可以这样写</span></span><br><span class="line"><span class="built_in">unique_ptr</span>(<span class="keyword">int</span>,<span class="keyword">decltype</span>(D)*&gt;u(&amp;q,D);</span><br><span class="line">u.release();<span class="comment">//u放弃对指针的控制权，返回指针，并置空</span></span><br><span class="line">u.reset();<span class="comment">//释放u所指的对象</span></span><br><span class="line">u = <span class="literal">nullptr</span>;<span class="comment">//释放对象并且将u置空</span></span><br><span class="line">u.reset(q);</span><br><span class="line">u.reset(<span class="literal">nullptr</span>);</span><br></pre></td></tr></table></figure>
-
+<h3 id="自动释放内存"><a href="#自动释放内存" class="headerlink" title="自动释放内存"></a>自动释放内存</h3><pre><code class="cpp">void f()
+{
+     shared_ptr&lt;int&gt; p1 = make_shared&lt;int&gt;(42);
+}
+//代码块结束，该内存自动释放
+shared_ptr&lt;int&gt; f()
+{
+     shared_ptr&lt;int&gt; p1 = make_shared&lt;int&gt;(42);
+     return p1;
+}
+//代码块结束，内存不会释放，在引用数为1时才会自动释放</code></pre>
+<h3 id="shared-ptr-的改变方法"><a href="#shared-ptr-的改变方法" class="headerlink" title="shared_ptr 的改变方法"></a>shared_ptr 的改变方法</h3><pre><code class="cpp">shared_ptr&lt;T&gt;p(q);//若q为new管理的内存，则不必delete q;
+shared_ptr&lt;T&gt;p(q,d);//p接管了q指针所管理的内存，并且使用d方法进行删除p
+p.reset();//将引用数减1，若引用数为0，则进行删除操作
+p.reset(q,d);//将p指针指向q，删除操作利用d方法</code></pre>
+<h2 id="unique-ptr智能指针"><a href="#unique-ptr智能指针" class="headerlink" title="unique_ptr智能指针"></a>unique_ptr智能指针</h2><h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><pre><code class="cpp">unique_ptr&lt;T,D&gt;u(q,d);//与上面的d方法删除类似
+//举例，假设有方法D(),class q则可以这样写
+unique_ptr(int,decltype(D)*&gt;u(&amp;q,D);
+u.release();//u放弃对指针的控制权，返回指针，并置空
+u.reset();//释放u所指的对象
+u = nullptr;//释放对象并且将u置空
+u.reset(q);
+u.reset(nullptr);</code></pre>
 <p>不可使用make_shared函数</p>
-<h3 id="分配动态数组"><a href="#分配动态数组" class="headerlink" title="分配动态数组"></a>分配动态数组</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unqiue_ptr&lt;T[]&gt;u(<span class="keyword">new</span> T [SIZE] );</span><br></pre></td></tr></table></figure>
-
-<h2 id="allocator类"><a href="#allocator类" class="headerlink" title="allocator类"></a>allocator类</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">allocator&lt;T&gt;a;</span><br><span class="line"><span class="keyword">auto</span> p = a.allocate(n);<span class="comment">//分配n大小的内存</span></span><br><span class="line"><span class="keyword">auto</span> q = p;</span><br><span class="line">a.constrcut(q,args);<span class="comment">//args为类型为T的构造函数如  string 的 构造函数  (10,'c')  不用括号，用逗号隔开</span></span><br><span class="line"><span class="keyword">while</span>(q!=p)  a.destory(q---);销毁元素</span><br><span class="line">a.deallocate(p,n);<span class="comment">//释放内存，向系统归还内存</span></span><br></pre></td></tr></table></figure>
-
+<h3 id="分配动态数组"><a href="#分配动态数组" class="headerlink" title="分配动态数组"></a>分配动态数组</h3><pre><code class="cpp">unqiue_ptr&lt;T[]&gt;u(new T [SIZE] );</code></pre>
+<h2 id="allocator类"><a href="#allocator类" class="headerlink" title="allocator类"></a>allocator类</h2><pre><code class="cpp">allocator&lt;T&gt;a;
+auto p = a.allocate(n);//分配n大小的内存
+auto q = p;
+a.constrcut(q,args);//args为类型为T的构造函数如  string 的 构造函数  (10,&#39;c&#39;)  不用括号，用逗号隔开
+while(q!=p)  a.destory(q---);销毁元素
+a.deallocate(p,n);//释放内存，向系统归还内存</code></pre>
 
         
     

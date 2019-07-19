@@ -522,54 +522,114 @@
 <p>每个函数都有操作数的上限值，注意 = 不算</p>
 <p>使用 btest 来测试结果的正确与否</p>
 <p>使用 BDD checker 来正规测试你的函数</p>
-<h3 id="显示32位int整型的show方法"><a href="#显示32位int整型的show方法" class="headerlink" title="显示32位int整型的show方法"></a>显示32位int整型的show方法</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    Show 32 Bits Integer By Binary</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">32</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i != <span class="number">0</span> &amp;&amp; i % <span class="number">4</span> == <span class="number">0</span>)</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; ((x &gt;&gt; <span class="number">31</span>) &amp; <span class="number">1</span>);</span><br><span class="line">        x &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h3 id="显示32位int整型的show方法"><a href="#显示32位int整型的show方法" class="headerlink" title="显示32位int整型的show方法"></a>显示32位int整型的show方法</h3><pre><code class="cpp">void show(int x)
+{
+    /*
+    Show 32 Bits Integer By Binary
+    */
+    for (int i = 0; i &lt; 32; ++i)
+    {
+        if (i != 0 &amp;&amp; i % 4 == 0)
+            cout &lt;&lt; &quot; &quot;;
+        cout &lt;&lt; ((x &gt;&gt; 31) &amp; 1);
+        x &lt;&lt;= 1;
+    }
+    cout &lt;&lt; endl;
+}</code></pre>
 <p>该方法用于检验函数是否写的正确以及调试的方便性</p>
 <h2 id="thirdBits"><a href="#thirdBits" class="headerlink" title="thirdBits"></a>thirdBits</h2><p>题目要求：return word with every third bit (starting from the LSB) set to 1</p>
 <p>允许操作：! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</p>
 <p>操作数限制：8</p>
 <p>分值：1</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">thirdBits</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    Desired output: 0100 1001 0010 0100 1001 0010 0100 1001 </span></span><br><span class="line"><span class="comment">    step 1:         0000 0000 0000 0000 0000 0000 0100 1001  0x49</span></span><br><span class="line"><span class="comment">    step 2:         0000 0000 0000 0000 1001 0010 0100 1001</span></span><br><span class="line"><span class="comment">    step 3:         0000 0000 1001 0100 1001 0010 0100 1001</span></span><br><span class="line"><span class="comment">    step 4:         0100 1001 0010 0100 1001 0010 0100 1001 </span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">0x49</span>;</span><br><span class="line">    <span class="keyword">int</span> b = (a &lt;&lt; <span class="number">9</span>);</span><br><span class="line">    <span class="keyword">int</span> c = a + b;</span><br><span class="line">    <span class="keyword">return</span> (c &lt;&lt; <span class="number">18</span>) + c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">int thirdBits()
+{
+    /*
+    Desired output: 0100 1001 0010 0100 1001 0010 0100 1001 
+    step 1:         0000 0000 0000 0000 0000 0000 0100 1001  0x49
+    step 2:         0000 0000 0000 0000 1001 0010 0100 1001
+    step 3:         0000 0000 1001 0100 1001 0010 0100 1001
+    step 4:         0100 1001 0010 0100 1001 0010 0100 1001 
+    */
+    int a = 0x49;
+    int b = (a &lt;&lt; 9);
+    int c = a + b;
+    return (c &lt;&lt; 18) + c;
+}</code></pre>
 <h2 id="isTmin"><a href="#isTmin" class="headerlink" title="isTmin"></a>isTmin</h2><p>题目要求：returns 1 if x is the minimum, two’s complement number, and 0 otherwise</p>
 <p>允许操作：! ~ &amp; ^ | +</p>
 <p>操作数限制：10</p>
 <p>分值：1</p>
 <p>该题用于检验INT_MIN 该题用到INT_MIN+INT_MIN溢出后为0的技巧 但也要注意0+0也为0</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isTmin</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    Return 1 if x is the minimum, two’s complement number, and 0 otherwise.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="keyword">return</span> !(x + x) &amp; !!(x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">int isTmin(int x)
+{
+    /*
+    Return 1 if x is the minimum, two’s complement number, and 0 otherwise.
+    */
+    return !(x + x) &amp; !!(x);
+}</code></pre>
 <h2 id="isNotEqual"><a href="#isNotEqual" class="headerlink" title="isNotEqual"></a>isNotEqual</h2><p>题目要求：return 0 if x == y, and 1 otherwise</p>
 <p>例如: isNotEqual(5,5) = 0, isNotEqual(4,5) = 1</p>
 <p>允许操作：! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</p>
 <p>操作数限制：6</p>
 <p>分值：2</p>
 <p>该题用异或即可，不同则不为0，相同则0，随后用到了!!将int值转化为bool值的技巧</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isNotEqual</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    Return 0 if x == y, and 1 otherwise</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="keyword">return</span> !!(x^y);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">int isNotEqual(int x, int y)
+{
+    /*
+    Return 0 if x == y, and 1 otherwise
+    */
+    return !!(x^y);
+}</code></pre>
 <h2 id="anyOddBit"><a href="#anyOddBit" class="headerlink" title="anyOddBit"></a>anyOddBit</h2><p>题目要求：return 1 if any odd-numbered bit in word set to 1</p>
 <p>例如： anyOddBit(0x5) = 0, anyOddBit(0x7) = 1</p>
 <p>允许操作：! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</p>
 <p>操作数限制：12</p>
 <p>分值：2</p>
 <p>该题的想法是想声明一个值为0xaa的变量随后将其扩展到32位，最后与x做与操作即可得到答案</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">anyOddBit</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    Return 1 if any odd-numbered bit in word set to 1</span></span><br><span class="line"><span class="comment">    1010 1010</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">0xAA</span>;</span><br><span class="line">    <span class="keyword">int</span> b = (a &lt;&lt; <span class="number">8</span>) + a;</span><br><span class="line">    <span class="keyword">int</span> c = (b &lt;&lt; <span class="number">8</span>) + a;</span><br><span class="line">    <span class="keyword">int</span> d = (c &lt;&lt; <span class="number">8</span>) + a;</span><br><span class="line">    <span class="keyword">return</span> !!(x&amp;d);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">int anyOddBit(int x)
+{
+    /*
+    Return 1 if any odd-numbered bit in word set to 1
+    1010 1010
+    */
+    int a = 0xAA;
+    int b = (a &lt;&lt; 8) + a;
+    int c = (b &lt;&lt; 8) + a;
+    int d = (c &lt;&lt; 8) + a;
+    return !!(x&amp;d);
+}</code></pre>
 <h2 id="negate"><a href="#negate" class="headerlink" title="negate"></a>negate</h2><p>题目要求：return -x</p>
 <p>例如：negate(1) = -1.</p>
 <p>允许操作：! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</p>
 <p>操作数限制：5</p>
 <p>分值：2</p>
 <p>该题利用补码的取反后加一即可达到要求，但是最开始没有想到取反操作而是制造了0xffffffff这个数进行操作</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">negate</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    Return negate </span></span><br><span class="line"><span class="comment">    eg: if x==1 return -1</span></span><br><span class="line"><span class="comment">    Or return ~x+1</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="keyword">int</span> mask = (<span class="number">1</span> ^ (<span class="number">1</span> &lt;&lt; <span class="number">31</span>)) &gt;&gt; <span class="number">31</span>;</span><br><span class="line">    <span class="keyword">return</span> (x^mask) + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">int negate(int x)
+{
+    /*
+    Return negate 
+    eg: if x==1 return -1
+    Or return ~x+1
+    */
+    int mask = (1 ^ (1 &lt;&lt; 31)) &gt;&gt; 31;
+    return (x^mask) + 1;
+}</code></pre>
 <h2 id="conditional"><a href="#conditional" class="headerlink" title="conditional"></a>conditional</h2><p>题目要求：same as x ? y : z</p>
 <p>例如：conditional(2,4,5) = 4</p>
 <p>允许操作：! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</p>
 <p>操作数限制：16</p>
 <p>分值：3</p>
 <p>该题即三目操作符</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Conditional</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> z)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    x?y:z</span></span><br><span class="line"><span class="comment">    Better : int mask= ~!x+1;</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="keyword">int</span> mask = (!!x) &lt;&lt; <span class="number">31</span>;</span><br><span class="line">    mask &gt;&gt;= <span class="number">31</span>;</span><br><span class="line">    <span class="keyword">return</span> (mask&amp;y) | ((~mask)&amp;z);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">int Conditional(int x, int y, int z)
+{
+    /*
+    x?y:z
+    Better : int mask= ~!x+1;
+    */
+    int mask = (!!x) &lt;&lt; 31;
+    mask &gt;&gt;= 31;
+    return (mask&amp;y) | ((~mask)&amp;z);
+}</code></pre>
 <h2 id="subOK"><a href="#subOK" class="headerlink" title="subOK"></a>subOK</h2><p>题目要求：Determine if can compute x-y without overflow</p>
 <p>例如：</p>
 <p>subOK(0x80000000,0x80000000) = 1</p>
@@ -579,8 +639,17 @@
 <p>分值：3</p>
 <p>该题判断减法是否溢出，减法是否溢出，第一个取决的便是两个数字的符号，我们可以发现</p>
 <p>同号相减是不会溢出的，而异号相减溢出时结果的符号会与被减数的符号相反，所以有下面代码</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">subOK</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    Determine if can compute x-y without overflow</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="keyword">int</span> a = (x &gt;&gt; <span class="number">31</span>) &amp; <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> b = (y &gt;&gt; <span class="number">31</span>) &amp; <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> res = x + ~y + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> c = (res &gt;&gt; <span class="number">31</span>) &amp; <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> !(a^b) | !(a^c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">int subOK(int x, int y)
+{
+    /*
+    Determine if can compute x-y without overflow
+    */
+    int a = (x &gt;&gt; 31) &amp; 1;
+    int b = (y &gt;&gt; 31) &amp; 1;
+    int res = x + ~y + 1;
+    int c = (res &gt;&gt; 31) &amp; 1;
+    return !(a^b) | !(a^c);
+}</code></pre>
 <h2 id="isGreater"><a href="#isGreater" class="headerlink" title="isGreater"></a>isGreater</h2><p>题目要求：if x &gt; y then return 1, else return 0</p>
 <p>例如：isGreater(4,5) = 0, isGreater(5,4) = 1</p>
 <p>允许操作：! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</p>
@@ -589,16 +658,35 @@
 <p>该题比较两个数字的大小，首先我们明确正数是比负数大的，而负数比正数小</p>
 <p>利用该性质我们可以先由该性质判断，随后利用两数相减为正数时返回1性质写出表达式</p>
 <p>我们需要注意的是，该地方是不需要考虑溢出的，因为溢出是异号相减的行为</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isGreater</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    if x &gt; y then return 1, else return 0  </span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="keyword">int</span> a = (x&gt;&gt;<span class="number">31</span>) &amp; <span class="number">1</span>, b = (y&gt;&gt;<span class="number">31</span>) &amp; <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> res = x + ~y + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> c = (res&gt;&gt;<span class="number">31</span>) &amp; <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> ((!a&amp;b) | !c)&amp;(!a | b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">int isGreater(int x, int y)
+{
+    /*
+    if x &gt; y then return 1, else return 0  
+    */
+    int a = (x&gt;&gt;31) &amp; 1, b = (y&gt;&gt;31) &amp; 1;
+    int res = x + ~y + 1;
+    int c = (res&gt;&gt;31) &amp; 1;
+    return ((!a&amp;b) | !c)&amp;(!a | b);
+}</code></pre>
 <h2 id="bitParity"><a href="#bitParity" class="headerlink" title="bitParity"></a>bitParity</h2><p>题目要求：returns 1 if x contains an odd number of 0’s</p>
 <p>例如：bitParity(5) = 0, bitParity(7) = 1</p>
 <p>允许操作：! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</p>
 <p>操作数限制：20</p>
 <p>分值：4</p>
 <p>该题要我们数出一个int整形的二进制表达中是否有奇数个0，我们可以利用异或不改变奇偶性来写</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bitParity</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    returns 1 if x contains an odd number of 0’s</span></span><br><span class="line"><span class="comment">    bitParity(5) = 0, bitParity(7) = 1</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    x = (x &gt;&gt; <span class="number">16</span>) ^ x;</span><br><span class="line">    x = (x &gt;&gt; <span class="number">8</span>) ^ x;</span><br><span class="line">    x = (x &gt;&gt; <span class="number">4</span>) ^ x;</span><br><span class="line">    x = (x &gt;&gt; <span class="number">2</span>) ^ x;</span><br><span class="line">    x = (x &gt;&gt; <span class="number">1</span>) ^ x;</span><br><span class="line">    <span class="keyword">return</span> (x &amp; <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">int bitParity(int x)
+{
+    /*
+    returns 1 if x contains an odd number of 0’s
+    bitParity(5) = 0, bitParity(7) = 1
+    */
+    x = (x &gt;&gt; 16) ^ x;
+    x = (x &gt;&gt; 8) ^ x;
+    x = (x &gt;&gt; 4) ^ x;
+    x = (x &gt;&gt; 2) ^ x;
+    x = (x &gt;&gt; 1) ^ x;
+    return (x &amp; 1);
+}</code></pre>
 <h2 id="howManyBits"><a href="#howManyBits" class="headerlink" title="howManyBits"></a>howManyBits</h2><p>题目要求：return the minimum number of bits required to represent x in two’s complement</p>
 <p>例如：</p>
 <p>howManyBits(12) = 5</p>
@@ -614,22 +702,115 @@
 <p>然后我们还要对特殊情况0和-1进行区分对待</p>
 <p>值得一提的是，我们对负数要取反，但不必加一，因为补码表示中负数范围是比正数大的</p>
 <p>而最小的负数取反后刚刚好是最大的正数</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">howManyBits</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    return the minimum number of bits required to represent x in two’s complement</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="keyword">int</span> a = ((!x) &lt;&lt; <span class="number">31</span>) &gt;&gt; <span class="number">31</span>; <span class="comment">//当x为0时，a全为1，否则全为0</span></span><br><span class="line">    <span class="keyword">int</span> b = ((!~x) &lt;&lt; <span class="number">31</span>) &gt;&gt; <span class="number">31</span>;<span class="comment">//当x为-1时，b全为1，否则全为0</span></span><br><span class="line">    <span class="keyword">int</span> bit_16, bit_8, bit_4, bit_2, bit_1;</span><br><span class="line">    <span class="keyword">int</span> sum;</span><br><span class="line">    <span class="keyword">int</span> op = x ^ (x &gt;&gt; <span class="number">31</span>);</span><br><span class="line">    bit_16 = (!!(op &gt;&gt; <span class="number">16</span>)) &lt;&lt; <span class="number">4</span>;</span><br><span class="line">    op = op &gt;&gt; bit_16;</span><br><span class="line">    bit_8 = (!!(op &gt;&gt; <span class="number">8</span>)) &lt;&lt; <span class="number">3</span>;</span><br><span class="line">    op = op &gt;&gt; bit_8;</span><br><span class="line">    bit_4 = (!!(op &gt;&gt; <span class="number">4</span>)) &lt;&lt; <span class="number">2</span>;</span><br><span class="line">    op = op &gt;&gt; bit_4;</span><br><span class="line">    bit_2 = (!!(op &gt;&gt; <span class="number">2</span>)) &lt;&lt; <span class="number">1</span>;</span><br><span class="line">    op = op &gt;&gt; bit_2;</span><br><span class="line">    bit_1 = (!!(op &gt;&gt; <span class="number">1</span>));</span><br><span class="line">    op = op &gt;&gt; bit_1;</span><br><span class="line">    sum = <span class="number">2</span> + bit_16 + bit_8 + bit_4 + bit_2 + bit_1;</span><br><span class="line">    <span class="keyword">return</span> (a &amp; <span class="number">1</span>) | (b &amp; <span class="number">1</span>) | (~a &amp; ~b&amp;sum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">int howManyBits(int x)
+{
+    /*
+    return the minimum number of bits required to represent x in two’s complement
+    */
+    int a = ((!x) &lt;&lt; 31) &gt;&gt; 31; //当x为0时，a全为1，否则全为0
+    int b = ((!~x) &lt;&lt; 31) &gt;&gt; 31;//当x为-1时，b全为1，否则全为0
+    int bit_16, bit_8, bit_4, bit_2, bit_1;
+    int sum;
+    int op = x ^ (x &gt;&gt; 31);
+    bit_16 = (!!(op &gt;&gt; 16)) &lt;&lt; 4;
+    op = op &gt;&gt; bit_16;
+    bit_8 = (!!(op &gt;&gt; 8)) &lt;&lt; 3;
+    op = op &gt;&gt; bit_8;
+    bit_4 = (!!(op &gt;&gt; 4)) &lt;&lt; 2;
+    op = op &gt;&gt; bit_4;
+    bit_2 = (!!(op &gt;&gt; 2)) &lt;&lt; 1;
+    op = op &gt;&gt; bit_2;
+    bit_1 = (!!(op &gt;&gt; 1));
+    op = op &gt;&gt; bit_1;
+    sum = 2 + bit_16 + bit_8 + bit_4 + bit_2 + bit_1;
+    return (a &amp; 1) | (b &amp; 1) | (~a &amp; ~b&amp;sum);
+}</code></pre>
 <h2 id="float-i2f"><a href="#float-i2f" class="headerlink" title="float_i2f"></a>float_i2f</h2><p>题目要求：Return bit-level equivalent of expression (float) x. Result is returned as unsigned int, but it is to be interpreted as the bit-level representation of a single-precision floating point values.</p>
 <p>允许操作：Any integer/unsigned operations incl. ||, &amp;&amp;. also if, while</p>
 <p>操作数限制：30</p>
 <p>分值：4</p>
 <p>该题只要懂得浮点数的表示即可写出</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="title">float_i2f</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sign = (x &gt;&gt; <span class="number">31</span>) &amp; <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> exponent, fraction, fraction_mask = <span class="number">0x7fffff</span>;</span><br><span class="line">    <span class="keyword">if</span> (x == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (x == <span class="number">0x8000000</span>)</span><br><span class="line">        exponent = <span class="number">158</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (sign == <span class="number">1</span>)</span><br><span class="line">            x = ~x + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> bit_16, bit_8, bit_4, bit_2, bit_1;</span><br><span class="line">        <span class="keyword">int</span> sum;</span><br><span class="line">        <span class="keyword">int</span> op = x ^ (x &gt;&gt; <span class="number">31</span>);</span><br><span class="line">        bit_16 = (!!(op &gt;&gt; <span class="number">16</span>)) &lt;&lt; <span class="number">4</span>;</span><br><span class="line">        op = op &gt;&gt; bit_16;</span><br><span class="line">        bit_8 = (!!(op &gt;&gt; <span class="number">8</span>)) &lt;&lt; <span class="number">3</span>;</span><br><span class="line">        op = op &gt;&gt; bit_8;</span><br><span class="line">        bit_4 = (!!(op &gt;&gt; <span class="number">4</span>)) &lt;&lt; <span class="number">2</span>;</span><br><span class="line">        op = op &gt;&gt; bit_4;</span><br><span class="line">        bit_2 = (!!(op &gt;&gt; <span class="number">2</span>)) &lt;&lt; <span class="number">1</span>;</span><br><span class="line">        op = op &gt;&gt; bit_2;</span><br><span class="line">        bit_1 = (!!(op &gt;&gt; <span class="number">1</span>));</span><br><span class="line">        op = op &gt;&gt; bit_1;</span><br><span class="line">        sum = <span class="number">1</span> + bit_16 + bit_8 + bit_4 + bit_2 + bit_1;</span><br><span class="line">        <span class="keyword">if</span> (sum &gt; <span class="number">24</span>)</span><br><span class="line">            fraction = x &gt;&gt; (sum - <span class="number">24</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (sum &lt; <span class="number">24</span>)</span><br><span class="line">            fraction = x &lt;&lt; (<span class="number">24</span> - sum);</span><br><span class="line">        fraction &amp;= fraction_mask;</span><br><span class="line">        exponent = <span class="number">127</span> + sum - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    show(fraction);</span><br><span class="line">    <span class="keyword">unsigned</span> ux = (sign &lt;&lt; <span class="number">31</span>) + (exponent &lt;&lt; <span class="number">23</span>) + fraction;</span><br><span class="line">    <span class="keyword">return</span> ux;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">unsigned float_i2f(int x)
+{
+    int sign = (x &gt;&gt; 31) &amp; 1;
+    int exponent, fraction, fraction_mask = 0x7fffff;
+    if (x == 0)
+        return 0;
+    else if (x == 0x8000000)
+        exponent = 158;
+    else
+    {
+        if (sign == 1)
+            x = ~x + 1;
+        int bit_16, bit_8, bit_4, bit_2, bit_1;
+        int sum;
+        int op = x ^ (x &gt;&gt; 31);
+        bit_16 = (!!(op &gt;&gt; 16)) &lt;&lt; 4;
+        op = op &gt;&gt; bit_16;
+        bit_8 = (!!(op &gt;&gt; 8)) &lt;&lt; 3;
+        op = op &gt;&gt; bit_8;
+        bit_4 = (!!(op &gt;&gt; 4)) &lt;&lt; 2;
+        op = op &gt;&gt; bit_4;
+        bit_2 = (!!(op &gt;&gt; 2)) &lt;&lt; 1;
+        op = op &gt;&gt; bit_2;
+        bit_1 = (!!(op &gt;&gt; 1));
+        op = op &gt;&gt; bit_1;
+        sum = 1 + bit_16 + bit_8 + bit_4 + bit_2 + bit_1;
+        if (sum &gt; 24)
+            fraction = x &gt;&gt; (sum - 24);
+        else if (sum &lt; 24)
+            fraction = x &lt;&lt; (24 - sum);
+        fraction &amp;= fraction_mask;
+        exponent = 127 + sum - 1;
+    }
+    show(fraction);
+    unsigned ux = (sign &lt;&lt; 31) + (exponent &lt;&lt; 23) + fraction;
+    return ux;
+}</code></pre>
 <h2 id="float-f2i"><a href="#float-f2i" class="headerlink" title="float_f2i"></a>float_f2i</h2><p>题目要求：Return bit-level equivalent of expression (int) f for floating point argument f. Argument is passed as unsigned int, but it is to be interpreted as the bit-level representation of a single-precision floating point value. Anything out of range (including NaN and infinity) should return 0x80000000u.</p>
 <p>允许操作：Any integer/unsigned operations incl. ||, &amp;&amp;. also if, while</p>
 <p>操作数限制：30</p>
 <p>分值：4</p>
 <p>该题是11题的逆过程，值得注意的是，我们要对小数部分进行切除</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">float_f2i</span><span class="params">(<span class="keyword">float</span> f)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span>*pf = (<span class="keyword">int</span>*)&amp;f;</span><br><span class="line">    <span class="keyword">int</span> x = *pf;</span><br><span class="line">    show(x);</span><br><span class="line">    <span class="keyword">int</span> sign = x &gt;&gt; <span class="number">31</span>;</span><br><span class="line">    <span class="keyword">int</span> x_abs = x &amp; <span class="number">0x7fffffff</span>;</span><br><span class="line">    <span class="keyword">int</span> exponent = x_abs &gt;&gt; <span class="number">23</span>;</span><br><span class="line">    <span class="keyword">if</span> (exponent &lt; <span class="number">127</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    show(exponent);</span><br><span class="line">    <span class="keyword">int</span> fraction_mask = <span class="number">0x7fffff</span>;</span><br><span class="line">    <span class="keyword">int</span> fraction = x&amp;fraction_mask;</span><br><span class="line">    show(fraction);</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (fraction)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (fraction &amp; <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        fraction &gt;&gt;= <span class="number">1</span>; </span><br><span class="line">        ++i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    show(fraction);</span><br><span class="line">    fraction |= (<span class="number">1</span> &lt;&lt; (<span class="number">23</span> - i));</span><br><span class="line">    show(fraction);</span><br><span class="line">    <span class="keyword">int</span> len = exponent - <span class="number">127</span> - (<span class="number">23</span> - i);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; len &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">int</span> res;</span><br><span class="line">    <span class="keyword">if</span> (len &gt; <span class="number">0</span>)</span><br><span class="line">        res = fraction &lt;&lt; len;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        res = fraction &gt;&gt; -len;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; exponent &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; res &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">if</span> (sign == <span class="number">-1</span>)</span><br><span class="line">        res = ~res + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">int float_f2i(float f)
+{
+    int*pf = (int*)&amp;f;
+    int x = *pf;
+    show(x);
+    int sign = x &gt;&gt; 31;
+    int x_abs = x &amp; 0x7fffffff;
+    int exponent = x_abs &gt;&gt; 23;
+    if (exponent &lt; 127)
+        return 0;
+    show(exponent);
+    int fraction_mask = 0x7fffff;
+    int fraction = x&amp;fraction_mask;
+    show(fraction);
+    int i = 0;
+    while (fraction)
+    {
+        if (fraction &amp; 1)
+            break;
+        fraction &gt;&gt;= 1; 
+        ++i;
+    }
+    cout &lt;&lt; i &lt;&lt; endl;
+    show(fraction);
+    fraction |= (1 &lt;&lt; (23 - i));
+    show(fraction);
+    int len = exponent - 127 - (23 - i);
+    cout &lt;&lt; len &lt;&lt; endl;
+    int res;
+    if (len &gt; 0)
+        res = fraction &lt;&lt; len;
+    else
+        res = fraction &gt;&gt; -len;
+    cout &lt;&lt; exponent &lt;&lt; endl;
+    cout &lt;&lt; res &lt;&lt; endl;
+    if (sign == -1)
+        res = ~res + 1;
+    return res;
+}</code></pre>
 <h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>第一个数据实验算是结束了，通过该实验，我又加深了对数据的理解，尤其是各种掩码的设计，有了更深的理解</p>
 
         

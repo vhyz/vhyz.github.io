@@ -500,26 +500,99 @@
     
         <h2 id="翻转数字问题"><a href="#翻转数字问题" class="headerlink" title="翻转数字问题"></a>翻转数字问题</h2><h3 id="7-Reverse-Integer"><a href="#7-Reverse-Integer" class="headerlink" title="7. Reverse Integer"></a>7. Reverse Integer</h3><p>这道题知道原理会非常容易弄懂，值得注意是要注意溢出问题</p>
 <p>贴上代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Solution&#123;</span><br><span class="line">public:</span><br><span class="line">int reverse(int x) &#123;</span><br><span class="line">		long long sum = 0;</span><br><span class="line"></span><br><span class="line">		while (x!= 0)</span><br><span class="line">		&#123;</span><br><span class="line">			</span><br><span class="line">			sum = sum * 10 + x%10;</span><br><span class="line">			if(sum&gt;INT_MAX || sum&lt;INT_MIN)</span><br><span class="line">			&#123;</span><br><span class="line">				return 0;</span><br><span class="line">			&#125;</span><br><span class="line">			x = x / 10;</span><br><span class="line">		&#125;</span><br><span class="line">		return sum;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<pre><code>class Solution{
+public:
+int reverse(int x) {
+        long long sum = 0;
 
-<h3 id="9-Palindrome-Number"><a href="#9-Palindrome-Number" class="headerlink" title="9. Palindrome Number"></a>9. Palindrome Number</h3><p>题意：若数字为回文数字，则返回true，否则返回false</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    bool isPalindrome(int x) &#123;</span><br><span class="line">        if (x&lt;0)</span><br><span class="line">            return false;</span><br><span class="line">        int temp = 0;</span><br><span class="line">        int y =x ;</span><br><span class="line">        while(y)</span><br><span class="line">        &#123;</span><br><span class="line">            temp = y%10+10*temp;</span><br><span class="line">            y = y / 10;</span><br><span class="line">        &#125;</span><br><span class="line">        if(temp == x)</span><br><span class="line">            return true;</span><br><span class="line">        else return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+        while (x!= 0)
+        {
 
-<p>这道题不必考虑溢出问题，因为最大的回文数字没有达到溢出的范围</p>
+            sum = sum * 10 + x%10;
+            if(sum&gt;INT_MAX || sum&lt;INT_MIN)
+            {
+                return 0;
+            }
+            x = x / 10;
+        }
+        return sum;
+    }
+};
+</code></pre><h3 id="9-Palindrome-Number"><a href="#9-Palindrome-Number" class="headerlink" title="9. Palindrome Number"></a>9. Palindrome Number</h3><p>题意：若数字为回文数字，则返回true，否则返回false</p>
+<pre><code>class Solution {
+public:
+    bool isPalindrome(int x) {
+        if (x&lt;0)
+            return false;
+        int temp = 0;
+        int y =x ;
+        while(y)
+        {
+            temp = y%10+10*temp;
+            y = y / 10;
+        }
+        if(temp == x)
+            return true;
+        else return false;
+    }
+};
+</code></pre><p>这道题不必考虑溢出问题，因为最大的回文数字没有达到溢出的范围</p>
 <h2 id="反转string字符串"><a href="#反转string字符串" class="headerlink" title="反转string字符串"></a>反转string字符串</h2><h3 id="344-Reverse-String"><a href="#344-Reverse-String" class="headerlink" title="344. Reverse String"></a>344. Reverse String</h3><p>题意即翻转字符串</p>
 <p>代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    string reverseString(string s) &#123;</span><br><span class="line">        int len = s.length();</span><br><span class="line">        for(int i = 0;i&lt;len/2;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            char temp = s[len-i-1];</span><br><span class="line">            s[len-i-1] = s[i];</span><br><span class="line">            s[i] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">        return s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>这道题并没有什么好说的，但是还有其他翻转问题，我们以后更新</p>
+<pre><code>class Solution {
+public:
+    string reverseString(string s) {
+        int len = s.length();
+        for(int i = 0;i&lt;len/2;i++)
+        {
+            char temp = s[len-i-1];
+            s[len-i-1] = s[i];
+            s[i] = temp;
+        }
+        return s;
+    }
+};
+</code></pre><p>这道题并没有什么好说的，但是还有其他翻转问题，我们以后更新</p>
 <h2 id="翻转链表"><a href="#翻转链表" class="headerlink" title="翻转链表"></a>翻转链表</h2><h3 id="206-Reverse-Linked-List"><a href="#206-Reverse-Linked-List" class="headerlink" title="206. Reverse Linked List"></a>206. Reverse Linked List</h3><p>题意即翻转链表</p>
 <p>贴上神奇的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition for singly-linked list.</span><br><span class="line"> * struct ListNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     ListNode *next;</span><br><span class="line"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    ListNode* reverseList(ListNode* head) &#123;</span><br><span class="line">        if(head==nullptr||head-&gt;next == nullptr)</span><br><span class="line">            return head;</span><br><span class="line">    </span><br><span class="line">        ListNode *p= head-&gt;next;</span><br><span class="line">        ListNode*n = reverseList(p);</span><br><span class="line">        head-&gt;next = nullptr;</span><br><span class="line">        p-&gt;next = head;</span><br><span class="line">        return n;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<pre><code>/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if(head==nullptr||head-&gt;next == nullptr)
+            return head;
 
-<p>这道题刚开始想并没有想到（因为蠢）所以直接去百度搜到了这个答案，这个答案巧妙运用了递归方法，值得学习</p>
+        ListNode *p= head-&gt;next;
+        ListNode*n = reverseList(p);
+        head-&gt;next = nullptr;
+        p-&gt;next = head;
+        return n;
+
+ }
+};
+</code></pre><p>这道题刚开始想并没有想到（因为蠢）所以直接去百度搜到了这个答案，这个答案巧妙运用了递归方法，值得学习</p>
 <p>接下来贴上一个不递归的方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    ListNode* reverseList(ListNode* head) &#123;</span><br><span class="line">        ListNode* pre = NULL;</span><br><span class="line">        while (head) &#123;</span><br><span class="line">            ListNode* next = head -&gt; next;</span><br><span class="line">            head -&gt; next = pre;</span><br><span class="line">            pre = head;</span><br><span class="line">            head = next;</span><br><span class="line">        &#125; </span><br><span class="line">        return pre;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>这个代码是运用了循环原理，先生成一个临时的next量保存head指向的next，然后最后用next恢复head构成一个循环</p>
+<pre><code>class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode* pre = NULL;
+        while (head) {
+            ListNode* next = head -&gt; next;
+            head -&gt; next = pre;
+            pre = head;
+            head = next;
+        } 
+        return pre;
+    }
+};
+</code></pre><p>这个代码是运用了循环原理，先生成一个临时的next量保存head指向的next，然后最后用next恢复head构成一个循环</p>
 <h2 id="翻转二叉树"><a href="#翻转二叉树" class="headerlink" title="翻转二叉树"></a>翻转二叉树</h2><h3 id="226-Invert-Binary-Tree"><a href="#226-Invert-Binary-Tree" class="headerlink" title="226. Invert Binary Tree"></a>226. Invert Binary Tree</h3><p>此翻转非彼翻转</p>
 <p>Invert a binary tree.<br>4<br>/   </p>
 <p>2     7<br>/ \   / </p>
@@ -528,18 +601,72 @@
 <p>7     2<br>/ \   / </p>
 <p>9   6 3   1</p>
 <p>此题的基本思路是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition for a binary tree node.</span><br><span class="line"> * struct TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     TreeNode *left;</span><br><span class="line"> *     TreeNode *right;</span><br><span class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line"></span><br><span class="line">    TreeNode* invertTree(TreeNode* root) &#123;</span><br><span class="line">        if(root == nullptr)</span><br><span class="line">            return nullptr;</span><br><span class="line">        TreeNode*temp = root-&gt;left;</span><br><span class="line">        root-&gt;left = root-&gt;right;</span><br><span class="line">        root-&gt;right = temp;</span><br><span class="line">        invertTree(root-&gt;left);</span><br><span class="line">        invertTree(root-&gt;right);</span><br><span class="line">        return root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<pre><code>/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
 
-<p>建立一个temp临时参量将left于right保存，然后利用递归的思路，把每一个树枝都当成原来的二叉树进行递归</p>
+    TreeNode* invertTree(TreeNode* root) {
+        if(root == nullptr)
+            return nullptr;
+        TreeNode*temp = root-&gt;left;
+        root-&gt;left = root-&gt;right;
+        root-&gt;right = temp;
+        invertTree(root-&gt;left);
+        invertTree(root-&gt;right);
+        return root;
+    }
+};
+</code></pre><p>建立一个temp临时参量将left于right保存，然后利用递归的思路，把每一个树枝都当成原来的二叉树进行递归</p>
 <p>此方法效率很低，让我们看看一个效率更高的方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition for a binary tree node.</span><br><span class="line"> * struct TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     TreeNode *left;</span><br><span class="line"> *     TreeNode *right;</span><br><span class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    TreeNode* invertTree(TreeNode* root) &#123;</span><br><span class="line">        queue&lt;TreeNode*&gt; q;</span><br><span class="line">        if(root) q.push(root);</span><br><span class="line">        while (!q.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            auto t = q.front();</span><br><span class="line">            q.pop();</span><br><span class="line">            swap(t-&gt;left, t-&gt;right);</span><br><span class="line">            if (t-&gt;left) q.push(t-&gt;left);</span><br><span class="line">            if (t-&gt;right) q.push(t-&gt;right);</span><br><span class="line">        &#125;</span><br><span class="line">        return root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>这个思路是建立一个queue队列，然后将第一个root排第一个队，然后将root取出来成为一个t，再把root剔除队伍，剔除后再把t的两支进队</p>
+<pre><code>/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        queue&lt;TreeNode*&gt; q;
+        if(root) q.push(root);
+        while (!q.empty())
+        {
+            auto t = q.front();
+            q.pop();
+            swap(t-&gt;left, t-&gt;right);
+            if (t-&gt;left) q.push(t-&gt;left);
+            if (t-&gt;right) q.push(t-&gt;right);
+        }
+        return root;
+    }
+};
+</code></pre><p>这个思路是建立一个queue队列，然后将第一个root排第一个队，然后将root取出来成为一个t，再把root剔除队伍，剔除后再把t的两支进队</p>
 <p>就这样不停的循环，直到最后一个元素的两支都是空，那么结束循环，返回root。</p>
 <p>但还有另外一种改进措施（针对第一种）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    TreeNode* invertTree(TreeNode* root) &#123;</span><br><span class="line">        if(root == NULL) &#123;</span><br><span class="line">            return root;</span><br><span class="line">        &#125;</span><br><span class="line">        TreeNode* temp = invertTree(root-&gt;left);</span><br><span class="line">        root-&gt;left = invertTree(root-&gt;right);</span><br><span class="line">        root-&gt;right = temp;</span><br><span class="line">        return root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>利用该函数返回值一定为进去的root翻转版本来设计</p>
+<pre><code>class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        if(root == NULL) {
+            return root;
+        }
+        TreeNode* temp = invertTree(root-&gt;left);
+        root-&gt;left = invertTree(root-&gt;right);
+        root-&gt;right = temp;
+        return root;
+    }
+};
+</code></pre><p>利用该函数返回值一定为进去的root翻转版本来设计</p>
 
         
     

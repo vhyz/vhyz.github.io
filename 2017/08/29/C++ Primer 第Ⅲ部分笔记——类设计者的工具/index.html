@@ -505,8 +505,7 @@
 <p>左值持久，右值短暂</p>
 <p>我们不能将右值引用绑定到一个变量上</p>
 <h3 id="标准库move函数"><a href="#标准库move函数" class="headerlink" title="标准库move函数"></a>标准库move函数</h3><p>位于头文件utility</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> &amp;&amp;i1 = <span class="built_in">std</span>::move(r2);</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">int &amp;&amp;i1 = std::move(r2);</code></pre>
 <p>我们可以使用move函数将左值强制转换为右值</p>
 <p>这也意味着，我们使用move函数之后可以销毁对象，也可以给对象赋予一个新值，但我们不能使用这个对象了</p>
 <h3 id="移动构造函数和移动赋值运算符"><a href="#移动构造函数和移动赋值运算符" class="headerlink" title="移动构造函数和移动赋值运算符"></a>移动构造函数和移动赋值运算符</h3><p>移动构造函数的参数为:类名&amp;&amp;</p>
@@ -515,28 +514,53 @@
 <p>移动赋值运算符函数类似，但前提是要检查返回值和传进来的右值地址是否相同</p>
 <h3 id="移动迭代器"><a href="#移动迭代器" class="headerlink" title="移动迭代器"></a>移动迭代器</h3><p>函数make_move_iterator函数接受一个迭代器，使其成为一个移动迭代器，将其与普通的迭代器使用即可</p>
 <p>区别在于我们使用这个函数后，这个迭代器以后就无法使用了，另外使用时会触发类的移动构造函数</p>
-<h2 id="重载与调用函数对象"><a href="#重载与调用函数对象" class="headerlink" title="重载与调用函数对象"></a>重载与调用函数对象</h2><h3 id="重载后置-–"><a href="#重载后置-–" class="headerlink" title="重载后置++–"></a>重载后置++–</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vec <span class="keyword">operator</span>++(<span class="keyword">int</span>)</span><br><span class="line">&#123;</span><br><span class="line">     vec ret = *<span class="keyword">this</span>;</span><br><span class="line">     ++*<span class="keyword">this</span>;</span><br><span class="line">     <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="函数调用重载"><a href="#函数调用重载" class="headerlink" title="函数调用重载"></a>函数调用重载</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">add</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">     <span class="function"><span class="keyword">int</span> <span class="title">operator</span><span class="params">()</span> <span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function">     </span>&#123;</span><br><span class="line">          <span class="keyword">return</span> i +j;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;;</span><br><span class="line">add Add;</span><br><span class="line"><span class="keyword">int</span> i = Add(<span class="number">2</span>,<span class="number">4</span>);</span><br></pre></td></tr></table></figure>
-
-<h3 id="lambda是函数对象"><a href="#lambda是函数对象" class="headerlink" title="lambda是函数对象"></a>lambda是函数对象</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//假设有这么一个算法表达式</span></span><br><span class="line">stable_sort(words.begin(),words.end(),[](<span class="keyword">const</span> <span class="built_in">string</span>&amp;a,<span class="keyword">const</span> <span class="built_in">string</span> &amp;b) &#123; <span class="keyword">return</span> a.size()&lt;b.size(); &#125;);</span><br><span class="line"><span class="comment">//其行为等价于</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShorterString</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">      <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp;a,<span class="keyword">const</span> <span class="built_in">string</span>&amp;b)</span> <span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> a.size()&lt;b.size();&#125;</span><br><span class="line">&#125;;</span><br><span class="line">stable_sort(words.begin(),words.end(),ShorterString());</span><br></pre></td></tr></table></figure>
-
+<h2 id="重载与调用函数对象"><a href="#重载与调用函数对象" class="headerlink" title="重载与调用函数对象"></a>重载与调用函数对象</h2><h3 id="重载后置-–"><a href="#重载后置-–" class="headerlink" title="重载后置++–"></a>重载后置++–</h3><pre><code class="cpp">vec operator++(int)
+{
+     vec ret = *this;
+     ++*this;
+     return ret;
+}</code></pre>
+<h3 id="函数调用重载"><a href="#函数调用重载" class="headerlink" title="函数调用重载"></a>函数调用重载</h3><pre><code class="cpp">class add
+{
+public:
+     int operator() (int i,int j)
+     {
+          return i +j;
+     }
+};
+add Add;
+int i = Add(2,4);</code></pre>
+<h3 id="lambda是函数对象"><a href="#lambda是函数对象" class="headerlink" title="lambda是函数对象"></a>lambda是函数对象</h3><pre><code class="cpp">//假设有这么一个算法表达式
+stable_sort(words.begin(),words.end(),[](const string&amp;a,const string &amp;b) { return a.size()&lt;b.size(); });
+//其行为等价于
+class ShorterString
+{
+public:
+      bool operator()(const string&amp;a,const string&amp;b) const {return a.size()&lt;b.size();}
+};
+stable_sort(words.begin(),words.end(),ShorterString());</code></pre>
 <h3 id="标准库定义的函数对象"><a href="#标准库定义的函数对象" class="headerlink" title="标准库定义的函数对象"></a>标准库定义的函数对象</h3><p>头文件：functional</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plus&lt;<span class="keyword">int</span>&gt;add;</span><br><span class="line"><span class="keyword">int</span> i = add(<span class="number">2</span>,<span class="number">4</span>);</span><br><span class="line">sort(vec.begin(),vec.end(),greater&lt;<span class="keyword">int</span>&gt;());<span class="comment">//按降序排序</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="可调用对象于function"><a href="#可调用对象于function" class="headerlink" title="可调用对象于function"></a>可调用对象于function</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> (<span class="keyword">int</span>,<span class="keyword">int</span>);<span class="comment">//是一个函数类型，接受两个int，返回一个int</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mod</span> <span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>;<span class="comment">//普通函数</span></span><br><span class="line"><span class="keyword">auto</span> add = [](<span class="keyword">int</span> i,<span class="keyword">int</span> j) &#123;<span class="keyword">return</span> i + j;&#125;;<span class="comment">//lambda</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">divide</span>&#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">operator</span><span class="params">()</span> <span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>;<span class="comment">//函数对象类</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">plus&lt;int&gt;add;
+int i = add(2,4);
+sort(vec.begin(),vec.end(),greater&lt;int&gt;());//按降序排序</code></pre>
+<h3 id="可调用对象于function"><a href="#可调用对象于function" class="headerlink" title="可调用对象于function"></a>可调用对象于function</h3><pre><code class="cpp">int (int,int);//是一个函数类型，接受两个int，返回一个int
+int mod (int i,int j);//普通函数
+auto add = [](int i,int j) {return i + j;};//lambda
+struct divide{
+    int operator() (int i,int j);//函数对象类
+};</code></pre>
 <p>我们可以通过标准库function来统一这三种类型</p>
 <p>比如我们需要做一个桌面计算器</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>,function&lt;<span class="keyword">int</span>(<span class="keyword">int</span>,<span class="keyword">int</span>)&gt;&gt;cal;<span class="comment">//定义一个map</span></span><br><span class="line">cal[<span class="string">"+"</span>] = add;</span><br><span class="line">cal[<span class="string">"%"</span>] = mod;</span><br><span class="line">cal[<span class="string">"/"</span>] = divide();</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">map&lt;string,function&lt;int(int,int)&gt;&gt;cal;//定义一个map
+cal[&quot;+&quot;] = add;
+cal[&quot;%&quot;] = mod;
+cal[&quot;/&quot;] = divide();</code></pre>
 <p>但我们必须注意二义性的问题</p>
 <p>如有必要，必须这样做</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> (*p)(<span class="keyword">int</span>,<span class="keyword">int</span>)=add;</span><br><span class="line">cal[<span class="string">"+"</span>] = p;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">int (*p)(int,int)=add;
+cal[&quot;+&quot;] = p;</code></pre>
 <h2 id="重载，类型转换与运算符"><a href="#重载，类型转换与运算符" class="headerlink" title="重载，类型转换与运算符"></a>重载，类型转换与运算符</h2><h3 id="类型转换运算符"><a href="#类型转换运算符" class="headerlink" title="类型转换运算符"></a>类型转换运算符</h3><p>基本形式：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">operator</span> <span class="title">type</span><span class="params">()</span> <span class="keyword">const</span> </span>;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">operator type() const ;</code></pre>
 <h2 id="类继承"><a href="#类继承" class="headerlink" title="类继承"></a>类继承</h2><h3 id="虚函数"><a href="#虚函数" class="headerlink" title="虚函数"></a>虚函数</h3><p>虚函数通常在基类前声明virtual</p>
 <p>为了防止派生类的虚函数并未覆盖基类中的虚函数，我们必须在派生类虚方法的参数列表后加上 override</p>
 <p>如果将一个函数设为final，那么它的派生类不可覆盖他</p>

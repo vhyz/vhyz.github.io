@@ -57,7 +57,7 @@
 
     <meta name="format-detection" content="telephone=no">
     <meta name="description" itemprop="description" content>
-    <meta name="keywords" content=",爬虫,Python">
+    <meta name="keywords" content=",Python,爬虫">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -243,7 +243,7 @@
     <meta property="og:title" content="Python爬取小说网站下载小说 | vhyz&#39;s Blog">
     <meta property="og:image" content="/img/favicon.png">
     <meta property="og:description" content>
-    <meta property="og:article:tag" content="爬虫"> <meta property="og:article:tag" content="Python"> 
+    <meta property="og:article:tag" content="Python"> <meta property="og:article:tag" content="爬虫"> 
 
     
         <meta property="article:published_time" content="Fri Mar 30 2018 22:13:00 GMT+0800">
@@ -288,7 +288,7 @@
             "url": "/img/favicon.png"
         }
     },
-    "keywords": ",爬虫,Python",
+    "keywords": ",Python,爬虫",
     "description": "",
 }
 </script>
@@ -504,28 +504,92 @@
 <h2 id="requests库"><a href="#requests库" class="headerlink" title="requests库"></a>requests库</h2><p>文档：<a href="http://www.python-requests.org/en/master/community/sponsors/" target="_blank" rel="noopener">http://www.python-requests.org/en/master/community/sponsors/</a></p>
 <p>requests库非常得简单好用，他可以向网站发送请求，接收信息</p>
 <p>最简单的一个例子即是</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">r = requests.get(url, timeout=<span class="number">30</span>)</span><br><span class="line">r.raise_for_status()</span><br><span class="line">r.encoding = r.apparent_encoding</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">r = requests.get(url, timeout=30)
+r.raise_for_status()
+r.encoding = r.apparent_encoding</code></pre>
 <p>raise_for_status()的功能是若服务器发送404/502之类的错误码raise_for_status()便会抛出异常</p>
 <p>r.encoding = r.apparent_encoding这一行语句用于调整编码，encoding为代码猜测出来的编码，可能并不准确</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_html</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        r = requests.get(url, timeout=<span class="number">30</span>)</span><br><span class="line">        r.raise_for_status()</span><br><span class="line">        r.encoding = r.apparent_encoding</span><br><span class="line">        <span class="keyword">return</span> r.text</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">" HTMLERROR "</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">def get_html(url):
+    try:
+        r = requests.get(url, timeout=30)
+        r.raise_for_status()
+        r.encoding = r.apparent_encoding
+        return r.text
+    except:
+        return &quot; HTMLERROR &quot;</code></pre>
 <h2 id="BeautifulSoup库"><a href="#BeautifulSoup库" class="headerlink" title="BeautifulSoup库"></a>BeautifulSoup库</h2><p>BeautifulSoup 是一个可以从HTML或XML文件中提取数据的Python库.它能够通过你喜欢的转换器实现惯用的文档导航,查找</p>
 <p>文档：<a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/" target="_blank" rel="noopener">https://www.crummy.com/software/BeautifulSoup/bs4/doc/</a></p>
 <p>基本用法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">url_list=[]</span><br><span class="line">soup = BeautifulSoup(html,<span class="string">'lxml'</span>)</span><br><span class="line">lista = soup.find_all(<span class="string">'dd'</span>)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">url_list=[]
+soup = BeautifulSoup(html,&#39;lxml&#39;)
+lista = soup.find_all(&#39;dd&#39;)</code></pre>
 <p>找到dd元素的原因是通过F12开发者工具发现每个章节的链接都在该元素中存储</p>
 <p>于是可以在每个元素中都可以找到该链接，然后把他放在要返回的列表中</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> Url <span class="keyword">in</span> lista:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        url_list.append(<span class="string">'http://www.126shu.com/'</span>+Url.a[<span class="string">'href'</span>])</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        print(<span class="string">'获取连接失败'</span>)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">    for Url in lista:
+        try:
+            url_list.append(&#39;http://www.126shu.com/&#39;+Url.a[&#39;href&#39;])
+        except:
+            print(&#39;获取连接失败&#39;)</code></pre>
 <h2 id="获取内容"><a href="#获取内容" class="headerlink" title="获取内容"></a>获取内容</h2><p>前两步处理完毕后获取了每个章节的链接，接下来就是对每个章节的内容进行处理</p>
 <p>通过F12开发者工具我们同样可以发现文本在哪，标题在哪，于是可以写出代码，然后打开文件进行写入</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_content</span><span class="params">(url)</span>:</span></span><br><span class="line">    html = get_html(url).replace(<span class="string">'&lt;br/&gt;'</span>,<span class="string">'\n'</span>)</span><br><span class="line">    soup = BeautifulSoup(html,<span class="string">'lxml'</span>)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        txt = soup.find(<span class="string">'div'</span>,id=<span class="string">'content'</span>).text</span><br><span class="line">        title = soup.find(<span class="string">'div'</span>,<span class="string">'hh'</span>).text</span><br><span class="line">        <span class="keyword">with</span> open(<span class="string">'全职法师.txt'</span>,<span class="string">'a+'</span>,encoding = <span class="string">'utf-8'</span>)<span class="keyword">as</span> f:</span><br><span class="line">            f.write(title+<span class="string">'\n\n'</span>)</span><br><span class="line">            f.write(txt)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        print(<span class="string">'ERROR'</span>)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="python">def get_content(url):
+    html = get_html(url).replace(&#39;&lt;br/&gt;&#39;,&#39;\n&#39;)
+    soup = BeautifulSoup(html,&#39;lxml&#39;)
+    try:
+        txt = soup.find(&#39;div&#39;,id=&#39;content&#39;).text
+        title = soup.find(&#39;div&#39;,&#39;hh&#39;).text
+        with open(&#39;全职法师.txt&#39;,&#39;a+&#39;,encoding = &#39;utf-8&#39;)as f:
+            f.write(title+&#39;\n\n&#39;)
+            f.write(txt)
+    except:
+        print(&#39;ERROR&#39;)</code></pre>
 <h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><p>由于我只是下载后面的章节，于是在main()函数中我设置了n变量进行判断</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_html</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        r = requests.get(url, timeout=<span class="number">30</span>)</span><br><span class="line">        r.raise_for_status()</span><br><span class="line">        r.encoding = r.apparent_encoding</span><br><span class="line">        <span class="keyword">return</span> r.text</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">" HTMLERROR "</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_url</span><span class="params">(url)</span>:</span></span><br><span class="line">    url_list=[]</span><br><span class="line">    html = get_html(url)</span><br><span class="line">    soup = BeautifulSoup(html,<span class="string">'lxml'</span>)</span><br><span class="line">    lista = soup.find_all(<span class="string">'dd'</span>)</span><br><span class="line">    <span class="keyword">for</span> Url <span class="keyword">in</span> lista:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            url_list.append(<span class="string">'http://www.126shu.com/'</span>+Url.a[<span class="string">'href'</span>])</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            print(<span class="string">'获取连接失败'</span>)</span><br><span class="line">    <span class="keyword">return</span> url_list</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_content</span><span class="params">(url)</span>:</span></span><br><span class="line">    html = get_html(url).replace(<span class="string">'&lt;br/&gt;'</span>,<span class="string">'\n'</span>)</span><br><span class="line">    soup = BeautifulSoup(html,<span class="string">'lxml'</span>)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        txt = soup.find(<span class="string">'div'</span>,id=<span class="string">'content'</span>).text</span><br><span class="line">        title = soup.find(<span class="string">'div'</span>,<span class="string">'hh'</span>).text</span><br><span class="line">        <span class="keyword">with</span> open(<span class="string">'全职法师.txt'</span>,<span class="string">'a+'</span>,encoding = <span class="string">'utf-8'</span>)<span class="keyword">as</span> f:</span><br><span class="line">            f.write(title+<span class="string">'\n\n'</span>)</span><br><span class="line">            f.write(txt)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        print(<span class="string">'ERROR'</span>)</span><br><span class="line">        </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(url)</span>:</span></span><br><span class="line">    url_list=get_url(url)</span><br><span class="line">    n = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> Url <span class="keyword">in</span> url_list:</span><br><span class="line">        n = n + <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> n&gt;<span class="number">1525</span>:</span><br><span class="line">            get_content(Url)</span><br><span class="line">url = <span class="string">'http://www.126shu.com/15/'</span></span><br><span class="line"><span class="keyword">if</span> __name__ ==<span class="string">'__main__'</span>:</span><br><span class="line">    main(url)</span><br></pre></td></tr></table></figure>
+<pre><code class="python">import requests
+import time
+from bs4 import BeautifulSoup
 
+def get_html(url):
+    try:
+        r = requests.get(url, timeout=30)
+        r.raise_for_status()
+        r.encoding = r.apparent_encoding
+        return r.text
+    except:
+        return &quot; HTMLERROR &quot;
+def get_url(url):
+    url_list=[]
+    html = get_html(url)
+    soup = BeautifulSoup(html,&#39;lxml&#39;)
+    lista = soup.find_all(&#39;dd&#39;)
+    for Url in lista:
+        try:
+            url_list.append(&#39;http://www.126shu.com/&#39;+Url.a[&#39;href&#39;])
+        except:
+            print(&#39;获取连接失败&#39;)
+    return url_list
+
+def get_content(url):
+    html = get_html(url).replace(&#39;&lt;br/&gt;&#39;,&#39;\n&#39;)
+    soup = BeautifulSoup(html,&#39;lxml&#39;)
+    try:
+        txt = soup.find(&#39;div&#39;,id=&#39;content&#39;).text
+        title = soup.find(&#39;div&#39;,&#39;hh&#39;).text
+        with open(&#39;全职法师.txt&#39;,&#39;a+&#39;,encoding = &#39;utf-8&#39;)as f:
+            f.write(title+&#39;\n\n&#39;)
+            f.write(txt)
+    except:
+        print(&#39;ERROR&#39;)
+
+def main(url):
+    url_list=get_url(url)
+    n = 1
+    for Url in url_list:
+        n = n + 1
+        if n&gt;1525:
+            get_content(Url)
+url = &#39;http://www.126shu.com/15/&#39;
+if __name__ ==&#39;__main__&#39;:
+    main(url)</code></pre>
 
         
     
