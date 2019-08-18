@@ -46,7 +46,7 @@
     
     <title>
         
-            C++ Primer 第Ⅱ部分笔记 | 
+            用Python模拟登录华工新版教务系统选课 (PyExecJS) | 
         
         vhyz&#39;s Blog
     </title>
@@ -57,7 +57,7 @@
 
     <meta name="format-detection" content="telephone=no">
     <meta name="description" itemprop="description" content>
-    <meta name="keywords" content=",C++,阅读">
+    <meta name="keywords" content=",Python,爬虫,模拟登录">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -223,7 +223,7 @@
     <!-- WebAPP Icons -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="vhyz&#39;s Blog">
-    <meta name="msapplication-starturl" content="https://vhyz.me/2017/08/23/C++ Primer 第Ⅱ部分笔记/">
+    <meta name="msapplication-starturl" content="https://vhyz.me/2019/03/17/用Python模拟登录华工新版教务系统选课 (PyExecJS)/">
     <meta name="msapplication-navbutton-color" content="#0097A7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="vhyz&#39;s Blog">
@@ -238,16 +238,16 @@
     
 
     <!-- The Open Graph protocol -->
-    <meta property="og:url" content="https://vhyz.me/2017/08/23/C++ Primer 第Ⅱ部分笔记/">
+    <meta property="og:url" content="https://vhyz.me/2019/03/17/用Python模拟登录华工新版教务系统选课 (PyExecJS)/">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="C++ Primer 第Ⅱ部分笔记 | vhyz&#39;s Blog">
+    <meta property="og:title" content="用Python模拟登录华工新版教务系统选课 (PyExecJS) | vhyz&#39;s Blog">
     <meta property="og:image" content="/img/favicon.png">
     <meta property="og:description" content>
-    <meta property="og:article:tag" content="C++"> <meta property="og:article:tag" content="阅读"> 
+    <meta property="og:article:tag" content="Python"> <meta property="og:article:tag" content="爬虫"> <meta property="og:article:tag" content="模拟登录"> 
 
     
-        <meta property="article:published_time" content="Wed Aug 23 2017 19:54:00 GMT+0800">
-        <meta property="article:modified_time" content="Tue Jun 12 2018 15:50:40 GMT+0800">
+        <meta property="article:published_time" content="Sun Mar 17 2019 14:42:47 GMT+0800">
+        <meta property="article:modified_time" content="Mon Aug 19 2019 00:39:29 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -255,7 +255,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://vhyz.me/2017/08/23/C++ Primer 第Ⅱ部分笔记/index.html">
+        <link rel="canonical" href="https://vhyz.me/2019/03/17/用Python模拟登录华工新版教务系统选课 (PyExecJS)/index.html">
     
 
     <!-- Structured-data for SEO -->
@@ -267,10 +267,10 @@
 {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "mainEntityOfPage": "https://vhyz.me/2017/08/23/C++ Primer 第Ⅱ部分笔记/index.html",
-    "headline": "C++ Primer 第Ⅱ部分笔记",
-    "datePublished": "Wed Aug 23 2017 19:54:00 GMT+0800",
-    "dateModified": "Tue Jun 12 2018 15:50:40 GMT+0800",
+    "mainEntityOfPage": "https://vhyz.me/2019/03/17/用Python模拟登录华工新版教务系统选课 (PyExecJS)/index.html",
+    "headline": "用Python模拟登录华工新版教务系统选课 (PyExecJS)",
+    "datePublished": "Sun Mar 17 2019 14:42:47 GMT+0800",
+    "dateModified": "Mon Aug 19 2019 00:39:29 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "vhyz",
@@ -288,7 +288,7 @@
             "url": "/img/favicon.png"
         }
     },
-    "keywords": ",C++,阅读",
+    "keywords": ",Python,爬虫,模拟登录",
     "description": "",
 }
 </script>
@@ -354,7 +354,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#向算法传递函数"><span class="post-toc-number">1.</span> <span class="post-toc-text">向算法传递函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#向排序算法传递二元谓词"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">向排序算法传递二元谓词</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#lambda表达式"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">lambda表达式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#lambda表达式的捕获"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">lambda表达式的捕获</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1值捕获与引用捕获"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">1值捕获与引用捕获</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#隐式捕获"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">隐式捕获</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#可变lambda"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">可变lambda</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#返回"><span class="post-toc-number">1.3.4.</span> <span class="post-toc-text">返回</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#shared-ptr类"><span class="post-toc-number">2.</span> <span class="post-toc-text">shared_ptr类</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#初始化语句"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">初始化语句</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#拷贝"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">拷贝</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#自动释放内存"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">自动释放内存</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#shared-ptr-的改变方法"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">shared_ptr 的改变方法</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#unique-ptr智能指针"><span class="post-toc-number">3.</span> <span class="post-toc-text">unique_ptr智能指针</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#基本用法"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">基本用法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#分配动态数组"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">分配动态数组</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#allocator类"><span class="post-toc-number">4.</span> <span class="post-toc-text">allocator类</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#模拟登录请求"><span class="post-toc-number">1.</span> <span class="post-toc-text">模拟登录请求</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#登录代码"><span class="post-toc-number">2.</span> <span class="post-toc-text">登录代码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#选课过程"><span class="post-toc-number">3.</span> <span class="post-toc-text">选课过程</span></a></li></ol>
     </ul>
     
 
@@ -386,7 +386,7 @@
         
     
             <p class="article-headline-p">
-                C++ Primer 第Ⅱ部分笔记
+                用Python模拟登录华工新版教务系统选课 (PyExecJS)
             </p>
         </div>
 
@@ -405,7 +405,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>vhyz</strong>
-        <span>8月 23, 2017</span>
+        <span>3月 17, 2019</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -429,7 +429,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/C/">C++</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/阅读/">阅读</a>
+        <a class="post_tag-link" href="/tags/Python/">Python</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/模拟登录/">模拟登录</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/爬虫/">爬虫</a>
     </ul>
     
 
@@ -446,7 +446,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=C++ Primer 第Ⅱ部分笔记&url=https://vhyz.me/2017/08/23/C++ Primer 第Ⅱ部分笔记/index.html&pic=https://vhyz.me/img/favicon.png&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=用Python模拟登录华工新版教务系统选课 (PyExecJS)&url=https://vhyz.me/2019/03/17/用Python模拟登录华工新版教务系统选课 (PyExecJS)/index.html&pic=https://vhyz.me/img/favicon.png&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -455,7 +455,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=C++ Primer 第Ⅱ部分笔记&url=https://vhyz.me/2017/08/23/C++ Primer 第Ⅱ部分笔记/index.html&via=vhyz" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=用Python模拟登录华工新版教务系统选课 (PyExecJS)&url=https://vhyz.me/2019/03/17/用Python模拟登录华工新版教务系统选课 (PyExecJS)/index.html&via=vhyz" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -464,7 +464,7 @@
 
     <!-- Share Facebook -->
     
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://vhyz.me/2017/08/23/C++ Primer 第Ⅱ部分笔记/index.html" target="_blank">
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://vhyz.me/2019/03/17/用Python模拟登录华工新版教务系统选课 (PyExecJS)/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Facebook
             </li>
@@ -473,7 +473,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=https://vhyz.me/2017/08/23/C++ Primer 第Ⅱ部分笔记/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=https://vhyz.me/2019/03/17/用Python模拟登录华工新版教务系统选课 (PyExecJS)/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Google+
             </li>
@@ -498,66 +498,45 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h2 id="向算法传递函数"><a href="#向算法传递函数" class="headerlink" title="向算法传递函数"></a>向算法传递函数</h2><h3 id="向排序算法传递二元谓词"><a href="#向排序算法传递二元谓词" class="headerlink" title="向排序算法传递二元谓词"></a>向排序算法传递二元谓词</h3><p>定义isSHorter方法</p>
-<pre><code class="cpp">bool isShorter(const int &amp;i,const int&amp; j)
-{
-    return i&lt;j;
-}</code></pre>
-<pre><code class="cpp">vecotr&lt;int&gt;nums = {5,4,1,2.3);
-sort(nums.begin(),nums.end(),isShorter);</code></pre>
-<h3 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h3><p>有些算法只能传递一元谓词，不能传递多元谓词，这时候lambda表达式就有效了</p>
-<p>比如find_if函数接收一个一元谓词</p>
-<pre><code class="cpp">int num = 3;
-find_if(nums.begin(), nums.end(), [num](const int&amp; i) {return i &gt; num; });</code></pre>
-<p>[]里面为捕获列表，lambda表达式与函数类似，只有捕获列表，全局变量，全局静态变量，参数可在花括号中使用</p>
-<h3 id="lambda表达式的捕获"><a href="#lambda表达式的捕获" class="headerlink" title="lambda表达式的捕获"></a>lambda表达式的捕获</h3><h4 id="1值捕获与引用捕获"><a href="#1值捕获与引用捕获" class="headerlink" title="1值捕获与引用捕获"></a>1值捕获与引用捕获</h4><p>这点与函数类似</p>
-<h4 id="隐式捕获"><a href="#隐式捕获" class="headerlink" title="隐式捕获"></a>隐式捕获</h4><p>值的隐式捕获： [=];</p>
-<p>引用的隐式捕获：[&amp;]</p>
-<p>若使用了某种隐式捕获，那么其他捕获必须是另一种捕获</p>
-<h4 id="可变lambda"><a href="#可变lambda" class="headerlink" title="可变lambda"></a>可变lambda</h4><p>若想对拷贝的值进行修改，必须在参数列表后加上 mutable 关键字</p>
-<h4 id="返回"><a href="#返回" class="headerlink" title="返回"></a>返回</h4><p>lambda表达式内不可有两句返回语句，如果必须使用</p>
-<p>那么必须使用尾置返回类型</p>
-<p>只需在参数列表后加上</p>
-<p>-&gt;typename</p>
-<p>即可使用多return语句</p>
-<h2 id="shared-ptr类"><a href="#shared-ptr类" class="headerlink" title="shared_ptr类"></a>shared_ptr类</h2><h3 id="初始化语句"><a href="#初始化语句" class="headerlink" title="初始化语句"></a>初始化语句</h3><pre><code class="cpp">shared_ptr&lt;int&gt;p1;
-p1=make_shared&lt;int&gt;(42);//使用make_shared函数
-shared_ptr&lt;int&gt;p2=make_shared&lt;int&gt;();//默认初始化
-shared_ptr&lt;int&gt;p3(new int(42));//使用new初始化</code></pre>
-<h3 id="拷贝"><a href="#拷贝" class="headerlink" title="拷贝"></a>拷贝</h3><pre><code class="cpp">shared_ptr p4(p1);//直接拷贝
-shared_ptr&lt;int&gt; p5 = p1;//间接拷贝</code></pre>
-<p>拷贝之后，指向那个地址的引用数加1，若引用数为0，则该内存自动释放</p>
-<h3 id="自动释放内存"><a href="#自动释放内存" class="headerlink" title="自动释放内存"></a>自动释放内存</h3><pre><code class="cpp">void f()
-{
-     shared_ptr&lt;int&gt; p1 = make_shared&lt;int&gt;(42);
+        <p>之前学校用的是老版正方教务系统，也写过文章，而最近学校更换了教务系统，作为计算机的学生，当然还是看看能不能写个脚本抢下课啦。</p>
+<p>具体用的时候也需要加点多线程的功能，我大概开了15个线程吧，不得不说学校这次的教务系统的服务器比之前的好了。</p>
+<p>成果大概就是帮一位女同学成功抢到了课（主要是脚本也没有扩散，毕竟如果多人使用这种脚本对服务器还是有点影响的</p>
+<h2 id="模拟登录请求"><a href="#模拟登录请求" class="headerlink" title="模拟登录请求"></a>模拟登录请求</h2><p>第一步是登录一次教务系统，然后抓包看看数据包的构成<br><img src="https://pic2.zhimg.com/80/v2-dfd7b19f2552b1b6dc4b78f2ed62efdd_hd.jpg" alt></p>
+<p>我们发现数据包由 rsa,ul,pl,it,execution,_eventid构成，我们一一在Chrome Network左侧搜索，我们很容易能够找到lt,execution，这在html里面就有，而这个数据是变化的，所以必须每次请求获得。<br><img src="https://pic3.zhimg.com/80/v2-f0598a9fcfc208f6893d1655daf988b2_hd.jpg" alt></p>
+<p>然后我们搜索rsa，rsa这个一看就知道是已加密的内容，所以必定在js里面出现，我们很快就能找到rsa，并且得知ul和pl是用户名和密码的长度信息，所以我们就只用得到rsa即可完成模拟登录了。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-db52f799c5a0657d0254b2d2e5ac5292_hd.jpg" alt></p>
+<p><img src="https://pic1.zhimg.com/80/v2-81f9612d4740a1e0f58d58e92bbed8a8_hd.jpg" alt></p>
+<p>然而这个加密是在另外一个名叫des.js的文件完成的，这个函数名为strEnc，第一个参数为用户名、密码和lt值的拼接，并且我初步观察了加密的流程，是比较复杂的，根据平常爬虫的思路，我们有两种办法：</p>
+<p>1.用Python直接模拟加密过程</p>
+<p>2.用selenium</p>
+<p>第一种方法显然是比较复杂的，所以我尝试了些许时间就放弃了，而第二种方法由于运行速度比较慢，所以也被我排除了。</p>
+<p>于是我就想到能不能运行js文件来获得同样的效果，所以我用了一个名为 PyExecJS 的Python库来运行js文件，我们首先把des.js这个文件下载到本地，然后再操作。</p>
+<p>所以到这里，我们的登录流程差不多已经理好思路了，开始写代码了。</p>
+<h2 id="登录代码"><a href="#登录代码" class="headerlink" title="登录代码"></a>登录代码</h2><p>我们获得一个Session对象，我们选课的核心即是获取登录成功的Cookie值，请求一次登录页面然后用正则表达式获取这两个数据的值。</p>
+<pre><code class="Python">headers = {
+    &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.22 Safari/537.36 SE 2.X MetaSr 1.0&#39;
 }
-//代码块结束，该内存自动释放
-shared_ptr&lt;int&gt; f()
-{
-     shared_ptr&lt;int&gt; p1 = make_shared&lt;int&gt;(42);
-     return p1;
+
+session = requests.Session()
+r = session.get(&#39;https://sso.scut.edu.cn/cas/login?service=http%3A%2F%2Fxsjw2018.scuteo.com%2Fjwglxt%2F%2Fdriotlogin&#39;,headers=headers)
+lt = re.findall(&#39;id=&quot;lt&quot; name=&quot;lt&quot; value=&quot;(.*?)&quot;&#39;,r.text)[0]
+execution = re.findall(&#39;name=&quot;execution&quot; value=&quot;(.*?)&quot;&#39;,r.text)[0]</code></pre>
+<p>随后利用PyexecJS这个库运行js代码获得rsa值，首先compile des.js代码，然后利用call方法调用strEnc函数获得rsa的值。</p>
+<pre><code class="Python">with open(&#39;des.js&#39;)as f:
+    ctx = execjs.compile(f.read())
+s = user+pw+lt
+rsa = ctx.call(&#39;strEnc&#39;,user+pw+lt,&#39;1&#39;,&#39;2&#39;,&#39;3&#39;)</code></pre>
+<p>获得到rsa值以后，就可以构造登录的数据包进行登录了</p>
+<pre><code>login_data = {
+    &#39;rsa&#39;:rsa,
+    &#39;ul&#39;:len(user),
+    &#39;pl&#39;:len(pw),
+    &#39;lt&#39;:lt,
+    &#39;execution&#39;:execution,
+    &#39;_eventId&#39;:&#39;submit&#39;
 }
-//代码块结束，内存不会释放，在引用数为1时才会自动释放</code></pre>
-<h3 id="shared-ptr-的改变方法"><a href="#shared-ptr-的改变方法" class="headerlink" title="shared_ptr 的改变方法"></a>shared_ptr 的改变方法</h3><pre><code class="cpp">shared_ptr&lt;T&gt;p(q);//若q为new管理的内存，则不必delete q;
-shared_ptr&lt;T&gt;p(q,d);//p接管了q指针所管理的内存，并且使用d方法进行删除p
-p.reset();//将引用数减1，若引用数为0，则进行删除操作
-p.reset(q,d);//将p指针指向q，删除操作利用d方法</code></pre>
-<h2 id="unique-ptr智能指针"><a href="#unique-ptr智能指针" class="headerlink" title="unique_ptr智能指针"></a>unique_ptr智能指针</h2><h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><pre><code class="cpp">unique_ptr&lt;T,D&gt;u(q,d);//与上面的d方法删除类似
-//举例，假设有方法D(),class q则可以这样写
-unique_ptr(int,decltype(D)*&gt;u(&amp;q,D);
-u.release();//u放弃对指针的控制权，返回指针，并置空
-u.reset();//释放u所指的对象
-u = nullptr;//释放对象并且将u置空
-u.reset(q);
-u.reset(nullptr);</code></pre>
-<p>不可使用make_shared函数</p>
-<h3 id="分配动态数组"><a href="#分配动态数组" class="headerlink" title="分配动态数组"></a>分配动态数组</h3><pre><code class="cpp">unqiue_ptr&lt;T[]&gt;u(new T [SIZE] );</code></pre>
-<h2 id="allocator类"><a href="#allocator类" class="headerlink" title="allocator类"></a>allocator类</h2><pre><code class="cpp">allocator&lt;T&gt;a;
-auto p = a.allocate(n);//分配n大小的内存
-auto q = p;
-a.constrcut(q,args);//args为类型为T的构造函数如  string 的 构造函数  (10,&#39;c&#39;)  不用括号，用逗号隔开
-while(q!=p)  a.destory(q---);销毁元素
-a.deallocate(p,n);//释放内存，向系统归还内存</code></pre>
+r = session.post(&#39;https://sso.scut.edu.cn/cas/login?service=http%3A%2F%2Fxsjw2018.scuteo.com%2Fjwglxt%2Fdriotlogin&#39;,data=login_data,headers=headers)</code></pre><h2 id="选课过程"><a href="#选课过程" class="headerlink" title="选课过程"></a>选课过程</h2><p>多选几门课，进行抓包，然后分析数据包的构成，根据分析，主要是前三项数据决定了是哪门课程，而这些信息都在html里面有，所以就不细说了，不过需要注意的是一直要用我们首先创建的Session对象才能正常发送请求。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-03ca93e88e370a7601058dce8c045e98_hd.jpg" alt></p>
 
         
     
@@ -578,7 +557,7 @@ a.deallocate(p,n);//释放内存，向系统归还内存</code></pre>
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2017/08/29/C++ Primer 第Ⅲ部分笔记——类设计者的工具/" id="post_nav-newer" class="prev-content">
+        <a href="/2019/07/14/用eventfd实现唤醒阻塞于epoll_wait的线程/" id="post_nav-newer" class="prev-content">
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
                 <i class="material-icons">arrow_back</i>
             </button>
@@ -592,7 +571,7 @@ a.deallocate(p,n);//释放内存，向系统归还内存</code></pre>
 
     <!-- Next Nav -->
     
-        <a href="/2017/08/04/C++Primer 第Ⅰ部分读书笔记/" id="post_nav-older" class="next-content">
+        <a href="/2018/09/13/C++完美转发与forward/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
