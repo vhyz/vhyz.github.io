@@ -46,7 +46,7 @@
     
     <title>
         
-            分类: 网络编程 | 
+            归档: 2019/8 | 
         
         vhyz&#39;s Blog
     </title>
@@ -220,7 +220,7 @@
     <!-- WebAPP Icons -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="vhyz&#39;s Blog">
-    <meta name="msapplication-starturl" content="https://vhyz.me/categories/网络编程/">
+    <meta name="msapplication-starturl" content="https://vhyz.me/archives/2019/08/">
     <meta name="msapplication-navbutton-color" content="#0097A7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="vhyz&#39;s Blog">
@@ -235,9 +235,9 @@
     
 
     <!-- The Open Graph protocol -->
-    <meta property="og:url" content="https://vhyz.me/categories/网络编程/">
+    <meta property="og:url" content="https://vhyz.me/archives/2019/08/">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="分类: 网络编程 | vhyz&#39;s Blog">
+    <meta property="og:title" content="归档: 2019/8 | vhyz&#39;s Blog">
     <meta property="og:image" content="/img/favicon.png">
     <meta property="og:description" content>
     
@@ -249,7 +249,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://vhyz.me/categories/网络编程/index.html">
+        <link rel="canonical" href="https://vhyz.me/archives/2019/08/index.html">
     
 
     <!-- Structured-data for SEO -->
@@ -312,20 +312,23 @@
     
 
         <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2019/07/14/用eventfd实现唤醒阻塞于epoll_wait的线程/">用eventfd实现唤醒阻塞于epoll_wait的线程</a></p>
+        <p class="article-headline-p"><a href="/2019/08/19/C++返回值优化与移动语义的思考/">C++返回值优化与移动语义的思考</a></p>
     </div>
 
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            eventfd是Linux提供的一个进程/线程间通信的一种方式，它是一个文件描述符，所以可以使用read/write。
-在我们编写Reactor模式的服务器程序时，每个I/O线程都会有一个event loop，而这些线程会阻塞于epoll_wait(Linux系统)
-我们在给这些线程分发任务时，需要唤醒阻塞这些线程，而eventfd可以加入到epoll中，所以我们可以使用eventfd来实现唤醒线程
-
+            C++的class本质上是值语义的，它在作为函数返回值时可能会造成不必要的拷贝
+返回值优化(RVO)返回值优化是编译器对返回一个值语义对象时进行的优化，这有助于性能优化
+假如我们有一个Foo类，它的定义如下所示
+class Foo {
+public:
+    Foo() {
+        cout &lt;&lt; &quot;...
         
         &nbsp;&nbsp;&nbsp;
         <span>
-            <a href="/2019/07/14/用eventfd实现唤醒阻塞于epoll_wait的线程/" target="_self">阅读全文</a>
+            <a href="/2019/08/19/C++返回值优化与移动语义的思考/" target="_self">阅读全文</a>
         </span>
     </div>
     <!-- Post_entry Info-->
@@ -337,14 +340,14 @@
             </div>
             <div>
                 <strong>vhyz</strong>
-                <span>7月 14, 2019</span>
+                <span>8月 19, 2019</span>
             </div>
         </div>
         <div id="post_entry-right-info">
           
               <!-- Category -->
               <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/网络编程/">网络编程</a>
+                  <a class="post_category-link" href="/categories/C/">C++</a>
               </span>
             
 
